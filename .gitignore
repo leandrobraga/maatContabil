@@ -1,0 +1,4 @@
+*.pyc
+*.pdf
+*.sqlite
+db/
