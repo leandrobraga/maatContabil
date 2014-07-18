@@ -449,7 +449,7 @@ class WindowMovConMensal(wx.MiniFrame):
                     igual = False
                     if self.movConIniParaArquivoListCtrl.GetItemCount() == 0:
                         index = self.movConIniGeraArquivoListCtrl.InsertStringItem(sys.maxint, unicode(movimento.codigoConta))
-                        self.movConIniGeraArquivoListCtrl.SetStringItem(index, 1, unicode(movimento.credito))
+                        self.movConIniGeraArquivoListCtrl.SetStringItem(index, 1, unicode(movimento.debito))
                         self.movConIniGeraArquivoListCtrl.SetStringItem(index, 2, unicode(movimento.id))
                         igual = True
 
@@ -675,7 +675,7 @@ class WindowMovConMensal(wx.MiniFrame):
         dialog = wx.ProgressDialog(u"Importando Movimentos Contábeis", u"Aguarde enquanto a operação é concluída", sheet.nrows -6 , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
         
         for row_index in range(4,sheet.nrows-6):
-            contaExiste = MovConMensal.query.filter_by(codigoConta=sheet.cell(row_index,0).value).first()
+            contaExiste = MovConMensal.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,0).value).first()
             if contaExiste == None:
 
                 MovConMensal(anoConta=unicode(datetime.datetime.now().year),

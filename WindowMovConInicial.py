@@ -389,7 +389,6 @@ class WindowMovConInicial(wx.MiniFrame):
         self.movConIniGeraArquivoListCtrl.InsertColumn(1, u'Débito', width=120)
         self.movConIniGeraArquivoListCtrl.InsertColumn(2, u'', width=0)
         self.movConIniGeraArquivoListCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.selecionaItensLicitacaoGeraArquivos)
-
         
         self.btnGerarComTudo = wx.Button(self.panelGeraArquivo, -1, u">|", pos=(290, 150))
         self.btnGerarComTudo.Bind(wx.EVT_BUTTON, self.insereTudo)
@@ -451,7 +450,7 @@ class WindowMovConInicial(wx.MiniFrame):
                     igual = False
                     if self.movConIniParaArquivoListCtrl.GetItemCount() == 0:
                         index = self.movConIniGeraArquivoListCtrl.InsertStringItem(sys.maxint, unicode(movimento.codigoConta))
-                        self.movConIniGeraArquivoListCtrl.SetStringItem(index, 1, unicode(movimento.credito))
+                        self.movConIniGeraArquivoListCtrl.SetStringItem(index, 1, unicode(movimento.debito))
                         self.movConIniGeraArquivoListCtrl.SetStringItem(index, 2, unicode(movimento.id))
                         igual = True
 
@@ -680,7 +679,7 @@ class WindowMovConInicial(wx.MiniFrame):
         dialog = wx.ProgressDialog(u"Importando Movimentos Contábeis", u"Aguarde enquanto a operação é concluída", sheet.nrows -6 , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
         
         for row_index in range(4,sheet.nrows-6):
-            contaExiste = MovConIni.query.filter_by(codigoConta=sheet.cell(row_index,0).value).first()
+            contaExiste = MovConIni.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,0).value).first()
             
             if contaExiste == None:
                 
