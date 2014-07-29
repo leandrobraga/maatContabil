@@ -124,6 +124,7 @@ class WindowMovConMensal(wx.MiniFrame):
             self.movConIniListCtrl.SetStringItem(index, 1, unicode(movimento.debito))
             self.movConIniListCtrl.SetStringItem(index, 2, unicode(movimento.credito))
             self.movConIniListCtrl.SetStringItem(index, 3, unicode(movimento.id))
+
     
     def escapaChar(self, event):
 
@@ -654,10 +655,17 @@ class WindowMovConMensal(wx.MiniFrame):
     def getMounthOnSheet(self, sheet):
 
         stringWithMounth = sheet.cell(1,1).value
+
+        choicesCompetencias = [u'Orçamento', u'Janeiro', u'Fevereiro', u'Marco', u'Abril', u'Maio', u'Junho', u'Julho', u'Agosto', u'Setembro',
+                                    u'Outubro', u'Novembro', u'Dezembro'
+                                    ]
         
-        for mounth in self.choicesCompetencias:
+        for mounth in choicesCompetencias:
 
             if stringWithMounth.upper().startswith(mounth.upper()):
+                if mounth == u"Marco":
+                
+                    return u"Março"
                 
                 return mounth
 
