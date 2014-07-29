@@ -387,7 +387,6 @@ class WindowMovConMensal(wx.MiniFrame):
         self.movConIniGeraArquivoListCtrl.InsertColumn(1, u'Débito', width=120)
         self.movConIniGeraArquivoListCtrl.InsertColumn(2, u'', width=0)
         self.movConIniGeraArquivoListCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.selecionaItensLicitacaoGeraArquivos)
-
         
         self.btnGerarComTudo = wx.Button(self.panelGeraArquivo, -1, u">|", pos=(290, 150))
         self.btnGerarComTudo.Bind(wx.EVT_BUTTON, self.insereTudo)

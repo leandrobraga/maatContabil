@@ -14,16 +14,16 @@ ID_TOOLBAR_CONTA_NOVO = 5001
 ID_TOOLBAR_CONTA_EDITAR = 5002
 ID_TOOLBAR_CONTA_EXCLUIR = 5003
 ID_TOOLBAR_CONTA_CRIAR_ARQUIVO = 504
+ID_TOOLBAR_CONTA_IMPORTAR = 505
 
 SHEET_NAME = 'MXM'
 
 class WindowConta(wx.MiniFrame):
     
 
-
     def __init__(self, parent):
 
-        wx.MiniFrame.__init__(self, parent, id=wx.ID_ANY, size=(530, 320), pos=(300, 170), title=u"Contas", style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
+        wx.MiniFrame.__init__(self, parent, id=wx.ID_ANY, size=(530, 350), pos=(300, 170), title=u"Contas", style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
         
         self.panelConta = wx.Panel(self, wx.ID_ANY)
 
@@ -39,8 +39,9 @@ class WindowConta(wx.MiniFrame):
         self.toolBar.AddSeparator()
         self.toolBar.AddLabelTool(ID_TOOLBAR_CONTA_CRIAR_ARQUIVO, "Gerar Arquivo", wx.Bitmap("./imagens/file.png"), shortHelp=u'Gera arquivo de conta')
         self.toolBar.AddSeparator()
+        self.toolBar.AddLabelTool(ID_TOOLBAR_CONTA_IMPORTAR, "Importar", wx.Bitmap("./imagens/import.png"), shortHelp=u'Importa Contas')
         self.toolBar.AddSeparator()
-        
+        self.toolBar.AddSeparator()
         
         self.toolBar.Realize()
         self.SetToolBar(self.toolBar)
@@ -67,7 +68,7 @@ class WindowConta(wx.MiniFrame):
 
         #ListCtrl
         self.hbox1 = wx.BoxSizer(wx.HORIZONTAL)
-        self.contaListCtrl = wx.ListCtrl(self.panelConta, wx.ID_ANY, pos=(0, 30), size=(525, 230), style=wx.LC_REPORT)
+        self.contaListCtrl = wx.ListCtrl(self.panelConta, wx.ID_ANY, pos=(0, 30), size=(525, 240), style=wx.LC_REPORT)
         self.contaListCtrl.InsertColumn(0, u'Conta', width=200)
         self.contaListCtrl.InsertColumn(1, u'Nome', width=300)
         self.contaListCtrl.InsertColumn(2, u'', width=0)
@@ -84,6 +85,7 @@ class WindowConta(wx.MiniFrame):
         self.Bind(wx.EVT_MENU, lambda event: self.vizualizaConta(event, self.idSelecionado), id=ID_TOOLBAR_CONTA_EDITAR)
         self.Bind(wx.EVT_MENU, lambda event: self.excluiConta(event, self.idSelecionado), id=ID_TOOLBAR_CONTA_EXCLUIR)
         self.Bind(wx.EVT_MENU, self.geraArquivoWindow, id=ID_TOOLBAR_CONTA_CRIAR_ARQUIVO)
+        self.Bind(wx.EVT_MENU, self.importaContas, id=ID_TOOLBAR_CONTA_IMPORTAR)
 
         self.Bind(wx.EVT_CLOSE, self.quit)
         #Fim Binds
@@ -117,13 +119,14 @@ class WindowConta(wx.MiniFrame):
         self.contaListCtrl.DeleteAllItems()
 
         contas = Conta.query.filter_by(competencia=self.cbCompetenciaForView.GetValue()).all()
-
+        #contas = Conta.query.all()
+        
         for conta in contas:
 
             index = self.contaListCtrl.InsertStringItem(sys.maxint, unicode(conta.codigoConta))
             self.contaListCtrl.SetStringItem(index, 1, unicode(conta.nomeConta))
             self.contaListCtrl.SetStringItem(index, 2, unicode(conta.id))
-            
+               
 
     def escapaChar(self, event):
 
@@ -782,17 +785,17 @@ class WindowConta(wx.MiniFrame):
 
                 f.write(unicode('0000'))
                 f.write(unicode(conta.anoConta.zfill(4)))
-                f.write(unicode(conta.codigoConta.ljust(34).replace("'", "").replace("\"", "")))
+                f.write(unicode(conta.codigoConta.replace("'", "").replace("\"", "").replace(".","").ljust(34)))
                 f.write(unicode(conta.nomeConta.ljust(50).replace("'", "").replace("\"", "")))
                 f.write(unicode(conta.nivelConta.zfill(2)))
                 f.write(unicode(conta.recebeLancamento))
                 f.write(unicode(self.transformaTipoSaldo(conta.tipoSaldo)))
-                f.write(unicode(conta.codigoContaSuperior.ljust(34).replace("'", "").replace("\"", "")))
+                f.write(unicode(conta.codigoContaSuperior.replace("'", "").replace("\"", "").replace(".","").ljust(34)))
                 f.write(unicode(conta.codigoReduzido.zfill(8)))
                 f.write(unicode(conta.codigoItem.zfill(9)))
                 f.write(unicode(conta.codigoBanco.zfill(4)))
-                f.write(unicode(conta.codigoAgencia.zfill(6)))
-                f.write(unicode(conta.numeroConta.ljust(10).replace("'", "").replace("\"", "")))
+                f.write(unicode(conta.codigoAgencia.replace("-","").zfill(6)))
+                f.write(unicode(conta.numeroConta.replace("-","").replace("'", "").replace("\"", "").ljust(10)))
                 f.write(unicode(self.transformaTipoConta(conta.tipoConta)))
                 f.write(unicode(conta.codigoTc.zfill(3)))
                 f.write(unicode(conta.anoContaSuperior.zfill(4)))
@@ -819,6 +822,17 @@ class WindowConta(wx.MiniFrame):
         else:
             return 'M'
 
+    def tipoSaldoParaSigla(self, tipoSaldo):
+
+        if unicode(tipoSaldo) == u'C':
+            return u'Crédito'
+        elif unicode(tipoSaldo) == u'D':
+            return u'Débito'
+        else:
+            return u'Mista'
+
+
+
     def transformaTipoConta(self, tipoConta):
        
         if unicode(tipoConta) == u'Conta Bancária':
@@ -828,8 +842,121 @@ class WindowConta(wx.MiniFrame):
         elif unicode(tipoConta) == u'Conta de Despesa':
             return 3
         else:
-            return 9         
+            return 9 
+    
 
+    def tipoContaParaSigla(self, tipoConta):
+       
+        if unicode(tipoConta) == "1":
+            return u'Conta Bancária'
+        elif unicode(tipoConta) == "2":
+            return u'Conta de Receita'
+        elif unicode(tipoConta) == "3":
+            return u'Conta de Despesa'
+        else:
+            return u'Outras Contas Contábeis'
+    
+    def confereCodigoConta(self, codigo):
 
+        partes = unicode(codigo).split(".")
+
+        if len(partes) == 2:
+            if partes[1] == '0':
+                return partes[0]
+
+        return codigo 
+
+    def importaContas(self, event):
+
+        pathFile = self.onOpenFile()
+        
+        if pathFile !=None:
+            notasInseridas = self.parserPlanilha(pathFile)
+            message = u'Foram inseridos %s Contas!' %(notasInseridas) 
+            self.message = wx.MessageDialog(None, message, 'Info', wx.OK)
+            self.message.ShowModal()
+            self.insereInCtrList(None)
+
+    def onOpenFile(self):
+        """
+        Create and show the Open FileDialog
+
+        """
+        from os.path import expanduser
+        homeDirectory = expanduser("~")
+        wildcard = "Microsoft Excel (*.xls, *.xlsx)|*.xls;*.xlsx" 
+ 
+        dlg = wx.FileDialog(
+            self, message="Selecione um arquivo",
+            defaultDir=homeDirectory, 
+            defaultFile="",
+            wildcard=wildcard,
+            style=wx.OPEN
+            )
+        if dlg.ShowModal() == wx.ID_OK:
+            paths = dlg.GetPaths()
+            if len(paths) == 1:
+                
+                return paths[0]
+            else:
+                self.message = wx.MessageDialog(None, u'Selecione somente um arquivo!', 'Info', wx.OK)
+                self.message.ShowModal()
+                
+        dlg.Destroy()
+
+    def getMounthOnSheet(self, sheet):
+
+        stringWithMounth = sheet.cell(2,1).value
+        
+        for mounth in self.choicesCompetencias:
+
+            if stringWithMounth.upper().startswith(mounth.upper()):
+                
+                return mounth
+
+    def parserPlanilha(self,pathFile):
+        
+        from xlrd import open_workbook
+        
+        book = open_workbook(pathFile)
+        for sheet_name in book.sheet_names():
+            if sheet_name == SHEET_NAME:
+                sheet = book.sheet_by_name(sheet_name)
+        
+        contasInseridas = 0
+        
+        dialog = wx.ProgressDialog(u"Importando Contas", u"Aguarde enquanto a operação é concluída", sheet.nrows , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
+        
+        for row_index in range(7,sheet.nrows):
+            contaExiste = Conta.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,2).value).first()
+            
+            if contaExiste == None:
+            
+                Conta(anoConta=unicode(sheet.cell(row_index,1).value).split('.')[0],
+                    codigoConta=unicode(sheet.cell(row_index,2).value),
+                    nomeConta=unicode(sheet.cell(row_index,3).value),
+                    nivelConta=unicode(sheet.cell(row_index,4).value).split('.')[0],
+                    recebeLancamento=unicode(sheet.cell(row_index,5).value),
+                    tipoSaldo=unicode(self.tipoSaldoParaSigla(sheet.cell(row_index,6).value)),
+                    codigoContaSuperior=unicode(self.confereCodigoConta(sheet.cell(row_index,7).value)),
+                    codigoReduzido=unicode(sheet.cell(row_index,8).value).split('.')[0],
+                    #verificar se este código pode ser zero. Cigas Não tem este código
+                    codigoItem=unicode("0"),
+                    codigoBanco=unicode(sheet.cell(row_index,10).value).split('.')[0],
+                    codigoAgencia=unicode(sheet.cell(row_index,11).value),
+                    numeroConta=unicode(sheet.cell(row_index,12).value),
+                    tipoConta=unicode(self.tipoContaParaSigla(sheet.cell(row_index,13).value)),
+                    #verificar se este código pode ser zero. Cigas Não tem este código
+                    codigoTc=unicode("0"),
+                    anoContaSuperior=unicode(sheet.cell(row_index,15).value).split('.')[0],
+                    competencia=unicode(self.getMounthOnSheet(sheet))
+                )
+                session.commit()
+                contasInseridas +=1
+                dialog.Update(contasInseridas)
+        
+        dialog.Destroy()
+
+        return contasInseridas    
 
 
