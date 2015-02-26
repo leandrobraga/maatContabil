@@ -582,7 +582,7 @@ class WindowMovConFinal(wx.MiniFrame):
 
                 f.write(unicode('000000'))
                 f.write(unicode(movConIni.anoConta.zfill(4)))
-                f.write(unicode(movConIni.codigoConta.ljust(34).replace("'", "").replace("\"", "")))
+                f.write(unicode(movConIni.codigoConta.replace("'", "").replace("\"", "").replace(".", "").ljust(34)))
                 f.write(unicode(movConIni.tipoMovimento))
                 movConIni.debito = float(movConIni.debito)
                 movConIni.debito = unicode(movConIni.debito)
@@ -653,33 +653,35 @@ class WindowMovConFinal(wx.MiniFrame):
 
     def getMounthOnSheet(self, sheet):
 
-        stringWithMounth = sheet.cell(1,1).value
-        
+        stringWithMounth = sheet.cell(1, 1).value
+
         for mounth in self.choicesCompetencias:
 
             if stringWithMounth.upper().startswith(mounth.upper()):
-                
+
                 return mounth
 
-    def parserPlanilha(self,pathFile):
+    def parserPlanilha(self, pathFile):
         from xlrd import open_workbook
-        
+
         book = open_workbook(pathFile)
         for sheet_name in book.sheet_names():
             if sheet_name == SHEET_NAME:
                 sheet = book.sheet_by_name(sheet_name)
-        
+
         contasInseridas = 0
-        
+
+        year = sheet.cell(1, 1).value.split(" ")[2]
+
         dialog = wx.ProgressDialog(u"Importando Movimentos Contábeis", u"Aguarde enquanto a operação é concluída", sheet.nrows -6 , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
-        
+
         for row_index in range(4,sheet.nrows-6):
             contaExiste = MovConFinal.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,0).value).first()
             if contaExiste == None:
 
                 if sheet.cell(row_index,0).value[0] == '1':
             
-                    MovConFinal(anoConta=unicode(datetime.datetime.now().year),
+                    MovConFinal(anoConta=unicode(year),
                         codigoConta=unicode(sheet.cell(row_index,0).value),
                         tipoMovimento=unicode("3"),
                         debito=unicode(sheet.cell(row_index,5).value),
@@ -692,7 +694,7 @@ class WindowMovConFinal(wx.MiniFrame):
 
                 elif sheet.cell(row_index,0).value[0] == '2':
             
-                    MovConFinal(anoConta=unicode(datetime.datetime.now().year),
+                    MovConFinal(anoConta=unicode(year),
                         codigoConta=unicode(sheet.cell(row_index,0).value),
                         tipoMovimento=unicode("3"),
                         debito=unicode(0),
@@ -705,7 +707,7 @@ class WindowMovConFinal(wx.MiniFrame):
 
                 else:
 
-                    MovConFinal(anoConta=unicode(datetime.datetime.now().year),
+                    MovConFinal(anoConta=unicode(year),
                         codigoConta=unicode(sheet.cell(row_index,0).value),
                         tipoMovimento=unicode("3"),
                         debito=unicode(0),

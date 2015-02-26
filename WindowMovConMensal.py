@@ -571,7 +571,7 @@ class WindowMovConMensal(wx.MiniFrame):
         self.windowGeraArquivo.Destroy()
 
     def geraArquivo(self):
-        
+
         f = codecs.open(self.path, "w", "utf-8")
 
         for x in range(self.movConIniParaArquivoListCtrl.GetItemCount()):
@@ -581,24 +581,23 @@ class WindowMovConMensal(wx.MiniFrame):
                 idConta = int(self.movConIniParaArquivoListCtrl.GetItem(x, 2).GetText())
                 movConIni = MovConMensal.query.filter_by(id=idConta).first()
 
-
                 f.write(unicode('000000'))
                 f.write(unicode(movConIni.anoConta.zfill(4)))
-                f.write(unicode(movConIni.codigoConta.ljust(34).replace("'", "").replace("\"", "")))
+                f.write(unicode(movConIni.codigoConta.replace("'", "").replace("\"", "").replace(".", "").ljust(34)))
                 f.write(unicode(movConIni.tipoMovimento))
                 movConIni.debito = float(movConIni.debito)
                 movConIni.debito = unicode(movConIni.debito)
                 partes = movConIni.debito.split('.')
-                if len(partes[1])> 1:
+                if len(partes[1]) > 1:
                     f.write(unicode((movConIni.debito).zfill(16).replace(".", ",")))
-                
+
                 else:
                     f.write(unicode((movConIni.debito+'0').zfill(16).replace(".", ",")))
 
                 movConIni.credito = float(movConIni.credito)
                 movConIni.credito = unicode(movConIni.credito)
                 partes = movConIni.credito.split('.')
-                if len(partes[1])> 1:
+                if len(partes[1]) > 1:
                     f.write(unicode((movConIni.credito).zfill(16).replace(".", ",")))
                 
                 else:
@@ -678,6 +677,8 @@ class WindowMovConMensal(wx.MiniFrame):
                 sheet = book.sheet_by_name(sheet_name)
         
         contasInseridas = 0
+
+        year = sheet.cell(1, 1).value.split(" ")[2]
         
         dialog = wx.ProgressDialog(u"Importando Movimentos Contábeis", u"Aguarde enquanto a operação é concluída", sheet.nrows -6 , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
         
@@ -685,7 +686,7 @@ class WindowMovConMensal(wx.MiniFrame):
             contaExiste = MovConMensal.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,0).value).first()
             if contaExiste == None:
 
-                MovConMensal(anoConta=unicode(datetime.datetime.now().year),
+                MovConMensal(anoConta=unicode(year),
                     codigoConta=unicode(sheet.cell(row_index,0).value),
                     tipoMovimento=unicode("2"),
                     debito=unicode(sheet.cell(row_index,3).value),
