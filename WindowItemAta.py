@@ -92,7 +92,6 @@ class WindowItemAta(wx.MiniFrame):
 
         self.idSelecionado = self.itemAtaListCtrl.GetItem(event.GetIndex(), 3).GetText()
 
-
     def insereInCtrList(self, event):
 
         self.itemAtaListCtrl.DeleteAllItems()
@@ -120,7 +119,7 @@ class WindowItemAta(wx.MiniFrame):
 
         self.toolBarControler(False, False, False, False)
 
-        self.windowNovoItemAta = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(470, 330), pos=(300, 170), title=u'Novo - Item Adesão de Ata', style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
+        self.windowNovoItemAta = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(470, 390), pos=(300, 170), title=u'Novo - Item Adesão de Ata', style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
         self.panelNovoItemAta = wx.Panel(self.windowNovoItemAta, wx.ID_ANY)
         
         self.tcId = wx.TextCtrl(self.panelNovoItemAta, -1, pos=(0, 0), size=(0, 0))
@@ -129,7 +128,7 @@ class WindowItemAta(wx.MiniFrame):
         self.stCompetencia = wx.StaticText(self.panelNovoItemAta, -1, u'Competência', pos=(10, 5))
         self.cbCompetencia = wx.ComboBox(self.panelNovoItemAta, -1, pos=(10, 25), size=(200, -1), choices=self.choicesCompetencias, style=wx.CB_READONLY)
         
-        wx.StaticBox(self.panelNovoItemAta, -1, pos=(5, 50), size=(450, 200))
+        wx.StaticBox(self.panelNovoItemAta, -1, pos=(5, 50), size=(450, 260))
 
         self.stProcessoCompra = wx.StaticText(self.panelNovoItemAta, -1, u'Número do Proc. de Compra', pos=(10, 70))
         self.tcProcessoCompra = wx.TextCtrl(self.panelNovoItemAta, -1, pos=(10, 90), size=(140, -1), style=wx.ALIGN_LEFT)
@@ -156,13 +155,6 @@ class WindowItemAta(wx.MiniFrame):
         self.tcSequenciaItem.SetMaxLength(5)
         self.tcSequenciaItem.Bind(wx.EVT_CHAR, self.escapaChar)
 
-        
-        
-
-        #self.tcQuantidade = wx.TextCtrl(self.panelNovoItemAta, -1, pos=(100, 210), size=(60, -1), style=wx.ALIGN_LEFT)
-        #self.tcQuantidade.SetMaxLength(2)
-        #self.tcQuantidade.Bind(wx.EVT_CHAR, self.escapaChar)
-
         self.stValorItem = wx.StaticText(self.panelNovoItemAta, -1, u'Valor', pos=(140, 190))
         self.tcValorItem = wx.lib.masked.numctrl.NumCtrl(id=-1, parent=self.panelNovoItemAta, pos=wx.Point(140, 210), style=0, value=0)
         self.tcValorItem.SetFractionWidth(2)
@@ -174,17 +166,17 @@ class WindowItemAta(wx.MiniFrame):
         self.stUnidadeMedida = wx.StaticText(self.panelNovoItemAta, -1, u'Unidade de Medida', pos=(320, 190))
         self.tcUnidadeMedida = wx.TextCtrl(self.panelNovoItemAta, -1, pos=(320, 210), size=(100, -1), style=wx.ALIGN_LEFT)
         self.tcUnidadeMedida.SetMaxLength(30)
+
+        self.stControleItem = wx.StaticText(self.panelNovoItemAta, -1, u'Controle Item / Lote', pos=(10, 250))
+        self.cbControleItem = wx.ComboBox(self.panelNovoItemAta, -1, pos=(10, 270), size=(70, -1), choices=['Item','Lote'], style=wx.CB_READONLY)
         
-        
-        self.btnSalvar = wx.Button(self.panelNovoItemAta, -1, u"Salvar", pos=(150, 270))
+        self.btnSalvar = wx.Button(self.panelNovoItemAta, -1, u"Salvar", pos=(150, 320))
         self.btnSalvar.Bind(wx.EVT_BUTTON, self.salvarItemAta)
-        self.btnCancelar = wx.Button(self.panelNovoItemAta, -1, u"Cancelar", pos=(250, 270))
+        self.btnCancelar = wx.Button(self.panelNovoItemAta, -1, u"Cancelar", pos=(250, 320))
         self.btnCancelar.Bind(wx.EVT_BUTTON, self.quitNovoItemAta)      
 
         #Bind
         self.windowNovoItemAta.Bind(wx.EVT_CLOSE, self.quitNovoItemAta)
-
-
 
         self.windowNovoItemAta.Centre()
         self.windowNovoItemAta.Show()
@@ -205,7 +197,7 @@ class WindowItemAta(wx.MiniFrame):
 
         self.item = ItemAta.query.filter_by(id=idItemAta).first()
 
-        self.windowEditaItemAta = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(470, 330), pos=(300, 170), title=u'Editar2 - Item Adesão de Ata', style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
+        self.windowEditaItemAta = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(470, 390), pos=(300, 170), title=u'Editar2 - Item Adesão de Ata', style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
         self.panelEditaItemAta = wx.Panel(self.windowEditaItemAta, wx.ID_ANY)
         
         self.tcId = wx.TextCtrl(self.panelEditaItemAta, -1, pos=(0, 0), size=(0, 0))
@@ -215,7 +207,7 @@ class WindowItemAta(wx.MiniFrame):
         self.cbCompetencia = wx.ComboBox(self.panelEditaItemAta, -1, pos=(10, 25), size=(200, -1), choices=self.choicesCompetencias, style=wx.CB_READONLY)
         self.cbCompetencia.SetValue(self.item.competencia)
 
-        wx.StaticBox(self.panelEditaItemAta, -1, pos=(5, 50), size=(450, 200))
+        wx.StaticBox(self.panelEditaItemAta, -1, pos=(5, 50), size=(450, 260))
 
         self.stProcessoCompra = wx.StaticText(self.panelEditaItemAta, -1, u'Número do Proc. de Compra', pos=(10, 70))
         self.tcProcessoCompra = wx.TextCtrl(self.panelEditaItemAta, -1, pos=(10, 90), size=(140, -1), style=wx.ALIGN_LEFT)
@@ -261,10 +253,14 @@ class WindowItemAta(wx.MiniFrame):
         self.tcUnidadeMedida = wx.TextCtrl(self.panelEditaItemAta, -1, pos=(320, 210), size=(100, -1), style=wx.ALIGN_LEFT)
         self.tcUnidadeMedida.SetMaxLength(30)
         self.tcUnidadeMedida.SetValue(self.item.unidadeMedida)
-        
-        self.btnSalvar = wx.Button(self.panelEditaItemAta, -1, u"Alterar", pos=(150, 270))
+
+        self.stControleItem = wx.StaticText(self.panelEditaItemAta, -1, u'Controle Item / Lote', pos=(10, 250))
+        self.cbControleItem = wx.ComboBox(self.panelEditaItemAta, -1, pos=(10, 270), size=(70, -1), choices=['Item','Lote'], style=wx.CB_READONLY)
+        self.cbControleItem.SetValue(self.item.controleItem)
+                
+        self.btnSalvar = wx.Button(self.panelEditaItemAta, -1, u"Alterar", pos=(150, 320))
         self.btnSalvar.Bind(wx.EVT_BUTTON, self.editarItemAta)
-        self.btnCancelar = wx.Button(self.panelEditaItemAta, -1, u"Cancelar", pos=(250, 270))
+        self.btnCancelar = wx.Button(self.panelEditaItemAta, -1, u"Cancelar", pos=(250, 320))
         self.btnCancelar.Bind(wx.EVT_BUTTON, self.quitItemAtaEdita)      
 
         #Bind
@@ -330,9 +326,16 @@ class WindowItemAta(wx.MiniFrame):
             self.message.ShowModal()
             return 0
 
+        if self.cbControleItem.GetSelection() == -1:
+
+            self.message = wx.MessageDialog(None, u'Selecione uma opção no campo Controle Item / Lote', 'Info', wx.OK)
+            self.cbControleItem.SetFocus()
+            self.message.ShowModal()
+            return 0
+
+
+
         return 1
-
-
 
     def salvarItemAta(self, event):
 
@@ -346,6 +349,7 @@ class WindowItemAta(wx.MiniFrame):
                         valorItem=unicode(self.tcValorItem.GetValue()),
                         unidadeMedida=unicode(self.tcUnidadeMedida.GetValue()),
                         descricaoItem=unicode(self.tcDescricaoItem.GetValue()),
+                        controleItem=unicode(self.cbControleItem.GetValue()),
                         competencia=unicode(self.cbCompetencia.GetValue()), 
                         )
 
@@ -360,7 +364,6 @@ class WindowItemAta(wx.MiniFrame):
                 self.message.ShowModal()
                 self.windowNovoItemAta.Close()
 
-
     def editarItemAta(self, event):
 
         if self.valida():
@@ -372,6 +375,7 @@ class WindowItemAta(wx.MiniFrame):
             self.item.valorItem=unicode(self.tcValorItem.GetValue())
             self.item.unidadeMedida=unicode(self.tcUnidadeMedida.GetValue())
             self.item.descricaoItem=unicode(self.tcDescricaoItem.GetValue())
+            self.item.controleItem = unicode(self.cbControleItem.GetValue())
             self.item.competencia=unicode(self.cbCompetencia.GetValue()) 
 
             session.commit()
@@ -632,11 +636,11 @@ class WindowItemAta(wx.MiniFrame):
                     f.write(unicode((item.valorItem+'0').zfill(16).replace(".", ",")))  
                 
                 f.write(unicode(item.unidadeMedida.ljust(30).replace("'", "").replace("\"", "")))
-                f.write(unicode(item.descricaoItem.ljust(300).replace("'", "").replace("\"", "")))                
+                f.write(unicode(item.descricaoItem.ljust(300).replace("'", "").replace("\"", "")))
+                f.write(unicode(item.controleItem.ljust(10).replace("'", "").replace("\"", "")))                
                 f.write(u'\n')
 
             #except:
 
                 #return 0
         return 1
-                        

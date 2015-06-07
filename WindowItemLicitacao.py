@@ -376,9 +376,8 @@ class WindowItemLicitacao(wx.MiniFrame):
                 dataPublicacao=unicode(self.tcDataPublicacao.GetValue()),
                 unidadeMedida=unicode(self.tcUnidadeMedida.GetValue()),
                 statusItem=unicode(self.cbStatusItem.GetValue()),
-                competencia=unicode(self.cbCompetencia.GetValue()),
                 controleItem=unicode(self.cbControleItem.GetValue()),
-
+                competencia=unicode(self.cbCompetencia.GetValue()),
             )
 
             session.commit()
@@ -497,7 +496,7 @@ class WindowItemLicitacao(wx.MiniFrame):
             self.item.statusItem = unicode(self.cbStatusItem.GetValue())
             self.item.competencia = unicode(self.cbCompetencia.GetValue())
             self.item.controleItem = unicode(self.cbControleItem.GetValue())
-
+           
             session.commit()
             self.message = wx.MessageDialog(None, u'O Item de Licitação foi alterado com sucesso!', 'Info', wx.OK)
             self.message.ShowModal()

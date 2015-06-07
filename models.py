@@ -246,6 +246,7 @@ class ItemAta(Entity):
     valorItem = Field(Unicode(16), required=True)
     unidadeMedida = Field(Unicode(30), required=True)
     descricaoItem = Field(Unicode(300), required=True)
+    controleItem = Field(Unicode(10))
     competencia = Field(Unicode(30))
 
 class LicitacaoAta(Entity):
