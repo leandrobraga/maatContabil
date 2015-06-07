@@ -7,6 +7,7 @@ from models import *
 import sys
 import os
 import codecs
+import burocracia
 
 setup_all()
 
@@ -94,7 +95,6 @@ class WindowLicitacaoAta(wx.MiniFrame):
 
         self.idSelecionado = self.licitacaoAtaListCtrl.GetItem(event.GetIndex(), 3).GetText()
 
-
     def insereInCtrList(self, event):
 
         self.licitacaoAtaListCtrl.DeleteAllItems()
@@ -167,7 +167,11 @@ class WindowLicitacaoAta(wx.MiniFrame):
         self.tcTipoAdesao = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'Tipo de Adesão', pos=(10, 250))
         self.cbTipoAdesao = wx.ComboBox(self.panelNovoLicitacaoAta, -1, size=(200, -1), pos=(10, 270), choices=self.choicesTipoAdesoes, style= wx.CB_READONLY)
 
-        
+        self.stCNPJ = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'CNPJ do Órgão Gerenciador', pos=(230, 250))
+        self.tcCnpjOrgao = masked.TextCtrl(self.panelNovoLicitacaoAta, -1, mask="##.###.###/####-##")
+        self.tcCnpjOrgao.SetSize((140, -1))
+        self.tcCnpjOrgao.SetPosition((230, 270))
+       
         self.btnSalvar = wx.Button(self.panelNovoLicitacaoAta, -1, u"Salvar", pos=(150, 315))
         self.btnSalvar.Bind(wx.EVT_BUTTON, self.salvarLicitacaoAta)
         self.btnCancelar = wx.Button(self.panelNovoLicitacaoAta, -1, u"Cancelar", pos=(250, 315))
@@ -248,6 +252,12 @@ class WindowLicitacaoAta(wx.MiniFrame):
         self.tcTipoAdesao = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'Tipo de Adesão', pos=(10, 250))
         self.cbTipoAdesao = wx.ComboBox(self.panelNovoLicitacaoAta, -1, size=(200, -1), pos=(10, 270), choices=self.choicesTipoAdesoes, style= wx.CB_READONLY)
         self.cbTipoAdesao.SetValue(self.licitacao.tipoAdesao)
+
+        self.stCNPJ = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'CNPJ do Órgão Gerenciador', pos=(230, 250))
+        self.tcCnpjOrgao = masked.TextCtrl(self.panelNovoLicitacaoAta, -1, mask="##.###.###/####-##")
+        self.tcCnpjOrgao.SetSize((140, -1))
+        self.tcCnpjOrgao.SetPosition((230, 270))
+        self.tcCnpjOrgao.SetValue(self.licitacao.cnpjOrgao)
         
         self.btnSalvar = wx.Button(self.panelNovoLicitacaoAta, -1, u"Alterar", pos=(150, 315))
         self.btnSalvar.Bind(wx.EVT_BUTTON, self.editarLicitacaoAta)
@@ -328,6 +338,20 @@ class WindowLicitacaoAta(wx.MiniFrame):
             self.message.ShowModal()
             return 0
 
+        if self.tcCnpjOrgao.GetValue() == "  .   .   /    -  ":
+            self.message = wx.MessageDialog(None, u'O campo CNPJ deve ser preenchido', 'Info', wx.OK)
+            self.tcCnpjOrgao.SelectAll()
+            self.tcCnpjOrgao.SetFocus()
+            self.message.ShowModal()
+            return 0
+
+        if not burocracia.CNPJ(self.tcCnpjOrgao.GetValue()).isValid():
+            self.message = wx.MessageDialog(None, u'CNPJ inválido!', 'Info', wx.OK)
+            self.tcCnpjOrgao.SelectAll()
+            self.tcCnpjOrgao.SetFocus()
+            self.message.ShowModal()
+            return 0
+
         return 1
 
     def validateDate(self, date, field):
@@ -394,6 +418,7 @@ class WindowLicitacaoAta(wx.MiniFrame):
                         numeroDOE=unicode(self.tcNumeroDOE.GetValue()),
                         dataAdesao=unicode(self.tcDataAdesao.GetValue()),
                         tipoAdesao=unicode(self.cbTipoAdesao.GetValue()),
+                        cnpjOrgao=unicode(self.tcCnpjOrgao.GetValue()),
                         competencia=unicode(self.cbCompetencia.GetValue()), 
                         )
 
@@ -408,7 +433,6 @@ class WindowLicitacaoAta(wx.MiniFrame):
                 self.message.ShowModal()
                 self.windowNovoLicitacaoAta.Close()
 
-
     def editarLicitacaoAta(self, event):
 
         if self.valida():
@@ -421,6 +445,7 @@ class WindowLicitacaoAta(wx.MiniFrame):
             self.licitacao.numeroDOE=unicode(self.tcNumeroDOE.GetValue())
             self.licitacao.dataAdesao=unicode(self.tcDataAdesao.GetValue())
             self.licitacao.tipoAdesao=unicode(self.cbTipoAdesao.GetValue())
+            self.licitacao.cnpjOrgao=unicode(self.tcCnpjOrgao.GetValue())
             self.licitacao.competencia=unicode(self.cbCompetencia.GetValue()) 
 
             session.commit()
@@ -669,7 +694,7 @@ class WindowLicitacaoAta(wx.MiniFrame):
                 f.write(unicode(item.numeroDOE.ljust(6).replace("'", "").replace("\"", "")))
                 f.write(unicode(self.transformaData(item.dataAdesao)))
                 f.write(unicode(self.transfromTipoAdesao(item.tipoAdesao).zfill(2)))
-                                               
+                f.write(unicode(self.retiraCaracteresCpfCnpj(item.cnpjOrgao).zfill(14)))                
                 f.write(u'\n')
 
             except:
@@ -695,3 +720,16 @@ class WindowLicitacaoAta(wx.MiniFrame):
         
             return "2"                  
 
+    def retiraCaracteresCpfCnpj(self, cic):
+
+        cpf = ""
+        for x in cic:
+            if x == u'.':
+                pass
+            elif x == u'-':
+                pass
+            elif x == u'/':
+                pass
+            else:
+                cpf = cpf+x
+        return cpf

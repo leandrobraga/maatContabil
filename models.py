@@ -44,10 +44,11 @@ class Contrato(Entity):
     dataValidadeOutras = Field(Unicode(10))
     tipoContrato = Field(Unicode(50))
     competencia = Field(Unicode(50))
+    numeroContratoAnterior = Field(Unicode(16))
+    tipoDoAditivo = Field(Unicode(50))
 
     def __repr__(self):
         return self.numeroContrato
-
 
 class Convenio(Entity):
 
@@ -67,7 +68,6 @@ class Convenio(Entity):
 
     def __repr__(self):
         return self.numeroConvenio
-
 
 class ParticipanteConvenio(Entity):
 
@@ -106,7 +106,6 @@ class ParticipanteConvenio(Entity):
     def __repr__(self):
         return self.nomeParticipante
 
-
 class Licitacao(Entity):
 
     numeroProcessoLicitatorio = Field(Unicode(16))
@@ -121,7 +120,6 @@ class Licitacao(Entity):
 
     def __repr__(self):
         return self.numeroProcessoLicitatorio
-
 
 class ItemLicitacao(Entity):
 
@@ -139,7 +137,6 @@ class ItemLicitacao(Entity):
     def __repr__(self):
         return self.descricaoItem
 
-
 class ParticipanteLicitacao(Entity):
 
     numeroProcessoLicitatorio = Field(Unicode(18))
@@ -155,7 +152,6 @@ class ParticipanteLicitacao(Entity):
     def __repr__(self):
         return self.nomeParticipante
 
-
 class Cotacao(Entity):
 
     tipoValor = Field(Unicode(1))
@@ -168,7 +164,6 @@ class Cotacao(Entity):
     quantidadeItem = Field(Unicode(16))
     competencia = Field(Unicode(40))
     controleItem = Field(Unicode(10))
-
 
 class Certidao(Entity):
 
@@ -185,7 +180,6 @@ class Certidao(Entity):
 
         return self.numeroCertidao
 
-
 class ContratoEmpenho(Entity):
 
     numeroContrato = Field(Unicode(16))
@@ -196,7 +190,6 @@ class ContratoEmpenho(Entity):
 
     def __repr__(self):
         return self.notaEmpenho
-
 
 class ConvenioEmpenho(Entity):
 
@@ -209,7 +202,6 @@ class ConvenioEmpenho(Entity):
     def __repr__(self):
         return self.notaEmpeho
 
-
 class Publicacao(Entity):
 
     numeroProcesso = Field(Unicode(16))
@@ -219,7 +211,6 @@ class Publicacao(Entity):
 
     def __repr__(self):
         return self.numeroProcesso
-
 
 class Dotacao(Entity):
 
@@ -235,7 +226,6 @@ class Dotacao(Entity):
     funcao = Field(Unicode(2))
     programa = Field(Unicode(4))
     competencia = Field(Unicode(30))
-
 
 class User(Entity):
 
@@ -268,14 +258,13 @@ class LicitacaoAta(Entity):
     numeroDOE = Field(Unicode(6), required=True)
     dataAdesao = Field(Unicode(8), required=True)
     tipoAdesao = Field(Unicode(2), required=True)
+    cnpjOrgao = Field(Unicode(14), required=True)
     competencia = Field(Unicode(30), required=True)
-
 
 class PlanoConta(Entity):
     
     conta = Field(Unicode(34), required=True)
     descricao = Field(Unicode(50), required=True)
-
 
 class Conta(Entity):
 
@@ -295,7 +284,6 @@ class Conta(Entity):
     codigoTc = Field(Unicode(11), required=True)
     anoContaSuperior = Field(Unicode(11), required=True)
     competencia = Field(Unicode(40), required= True)
-
 
 class MovConIni(Entity):
 

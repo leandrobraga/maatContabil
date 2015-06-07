@@ -96,6 +96,8 @@ class WindowContrato(wx.MiniFrame):
 
         self.choicesCodigoMoeda = [u'Real', u'Dolar', u'Outra Moeda']
 
+        self.tipoAditivo = [u'Acréscimo de valor', u'Decréscimo de valor', u'Não houve alteração de valor']
+
         #Binds
 
         self.Bind(wx.EVT_CLOSE, self.quit)
@@ -134,7 +136,7 @@ class WindowContrato(wx.MiniFrame):
 
         self.toolBarControler(False, False, False, False)
 
-        self.windowNovoContrato = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(680, 750), pos=(300, 170), title="Novo - Contrato", style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
+        self.windowNovoContrato = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(680, 850), pos=(300, 170), title="Novo - Contrato", style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
         self.panelNovoContrato = wx.Panel(self.windowNovoContrato, wx.ID_ANY)
 
         self.tcId = wx.TextCtrl(self.panelNovoContrato, -1, pos=(0, 0), size=(0, 0))
@@ -316,9 +318,17 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataVencimentoOutras.SetSize((80, -1))
         self.tcDataVencimentoOutras.SetPosition((280, 670))
 
+        wx.StaticBox(self.panelNovoContrato, -1, pos=(1, 700), size=(660, 65))
 
-        self.btnSalvar = wx.Button(self.panelNovoContrato, -1, "Salvar", pos=(230, 700),size=(-1,18))
-        self.btnCancelar = wx.Button(self.panelNovoContrato, -1, "Cancelar", pos=(350, 700),size=(-1,18))
+        self.stNumeroContratoSuperior = wx.StaticText(self.panelNovoContrato, -1, u'Número do Contrato Superior', pos=(10, 715), style=wx.ALIGN_LEFT)
+        self.tcNumeroContratoSuperior = wx.TextCtrl(self.panelNovoContrato, -1, pos=(10, 735), size=(200, -1), style=wx.ALIGN_LEFT)
+        self.tcNumeroContratoSuperior.SetMaxLength(16)
+
+        self.stTipoAditivo = wx.StaticText(self.panelNovoContrato, -1, u'Tipo do Aditivo', pos=(240, 715), style=wx.ALIGN_LEFT)
+        self.tcTipoAditivo = wx.ComboBox(self.panelNovoContrato, -1, pos=(240, 735), size=(180, -1), choices=self.tipoAditivo, style=wx.CB_READONLY)
+
+        self.btnSalvar = wx.Button(self.panelNovoContrato, -1, "Salvar", pos=(230, 790),size=(-1,18))
+        self.btnCancelar = wx.Button(self.panelNovoContrato, -1, "Cancelar", pos=(350, 790),size=(-1,18))
 
         self.windowNovoContrato.Centre()
         self.windowNovoContrato.Show()
@@ -378,6 +388,8 @@ class WindowContrato(wx.MiniFrame):
                 numeroCertidaoOutras=unicode(self.tcNumeroCertidaoOutras.GetValue()),
                 dataCertidaoOutras=unicode(self.tcDataEmissaoOutras.GetValue()),
                 dataValidadeOutras=unicode(self.tcDataVencimentoOutras.GetValue()),
+                numeroContratoAnterior=unicode(self.tcNumeroContratoSuperior.GetValue()),
+                tipoDoAditivo=unicode(self.tcTipoAditivo.GetValue()),
                 competencia=unicode(self.cbCompetencia.GetValue()),
             )
             session.commit()
@@ -431,7 +443,7 @@ class WindowContrato(wx.MiniFrame):
 
         self.contrato = Contrato.query.filter_by(id=idContrato).first()
 
-        self.windowEditaContrato = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(680, 750), pos=(300, 170), title=u"Editar - Contrato", style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
+        self.windowEditaContrato = wx.MiniFrame(parent=self, id=wx.ID_ANY, size=(680, 850), pos=(300, 170), title=u"Editar - Contrato", style= wx.SYSTEM_MENU | wx.CAPTION | wx.CLOSE_BOX | wx.CLIP_CHILDREN)
         self.panelNovoContrato = wx.Panel(self.windowEditaContrato, wx.ID_ANY)
 
         self.tcId = wx.TextCtrl(self.panelNovoContrato, -1, pos=(0, 0), size=(0, 0))
@@ -648,8 +660,19 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataVencimentoOutras.SetPosition((280, 670))
         self.tcDataVencimentoOutras.SetValue(self.contrato.dataValidadeOutras)
 
-        self.btnEditar = wx.Button(self.panelNovoContrato, -1, "Alterar", pos=(230, 700),size=(-1,18))
-        self.btnCancelar = wx.Button(self.panelNovoContrato, -1, "Cancelar", pos=(350, 700),size=(-1,18))
+        wx.StaticBox(self.panelNovoContrato, -1, pos=(1, 700), size=(660, 65))
+
+        self.stNumeroContratoSuperior = wx.StaticText(self.panelNovoContrato, -1, u'Número do Contrato Superior', pos=(10, 715), style=wx.ALIGN_LEFT)
+        self.tcNumeroContratoSuperior = wx.TextCtrl(self.panelNovoContrato, -1, pos=(10, 735), size=(200, -1), style=wx.ALIGN_LEFT)
+        self.tcNumeroContratoSuperior.SetMaxLength(16)
+        self.tcNumeroContratoSuperior.SetValue(self.contrato.numeroContratoAnterior)
+
+        self.stTipoAditivo = wx.StaticText(self.panelNovoContrato, -1, u'Tipo do Aditivo', pos=(240, 715), style=wx.ALIGN_LEFT)
+        self.tcTipoAditivo = wx.ComboBox(self.panelNovoContrato, -1, pos=(240, 735), size=(180, -1), choices=self.tipoAditivo, style=wx.CB_READONLY)
+        self.tcTipoAditivo.SetValue(self.contrato.tipoDoAditivo)
+
+        self.btnEditar = wx.Button(self.panelNovoContrato, -1, "Alterar", pos=(230, 790),size=(-1,18))
+        self.btnCancelar = wx.Button(self.panelNovoContrato, -1, "Cancelar", pos=(350, 790),size=(-1,18))
 
 
         self.windowEditaContrato.Centre()
@@ -705,6 +728,8 @@ class WindowContrato(wx.MiniFrame):
             self.contrato.dataCertidaoOutras = unicode(self.tcDataEmissaoOutras.GetValue())
             self.contrato.dataValidadeOutras = unicode(self.tcDataVencimentoOutras.GetValue())
             self.contrato.tipoContrato = unicode(self.cbTipoContrato.GetValue())
+            self.contrato.numeroContratoAnterior = unicode(self.tcNumeroContratoSuperior.GetValue())
+            self.contrato.tipoDoAditivo = unicode(self.tcTipoAditivo.GetValue())
             self.contrato.competencia = unicode(self.cbCompetencia.GetValue())
 
             session.commit()
@@ -1209,13 +1234,30 @@ class WindowContrato(wx.MiniFrame):
 
                 f.write(unicode(self.transformaTipoContrato(contrato.tipoContrato).zfill(2)))
 
-                f.write(u"\n")
+                f.write(unicode(contrato.numeroContratoAnterior).ljust(16))
 
+                f.write(unicode(self.transformaTipoAditivo(contrato.tipoDoAditivo)))
+
+                f.write(u"\n")
             except:
                 return 0
 
         f.close()
         return 1
+
+    def transformaTipoAditivo(self, tipo):
+        
+        if tipo:
+            return 0
+
+        if tipo == u'Acréscimo de valor':
+            return 1
+        
+        if tipo == u'Decréscimo de valor':
+            return 2
+
+        if tipo == u'Não houve alteração de valor':
+            return 3
 
     def transformaTipoContrato(self, tipo):
         return self.tipoContrato[tipo]

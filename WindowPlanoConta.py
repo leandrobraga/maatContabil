@@ -311,12 +311,15 @@ class WindowPlanoConta(wx.MiniFrame):
 
         dialog = wx.ProgressDialog(u"Importando Planos de Conta", u"Aguarde enquanto a operação é concluída", sheet.nrows -6 , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
         
-        for row_index in range(6,sheet.nrows):
-            contaExiste = PlanoConta.query.filter(PlanoConta.conta.like(sheet.cell(row_index,0).value)).first()
-            descricaoExiste = PlanoConta.query.filter(PlanoConta.conta.like(sheet.cell(row_index,1).value)).first()
-            if contaExiste == None and descricaoExiste == None :
-                PlanoConta(conta=unicode(sheet.cell(row_index,0).value),
-                    descricao=unicode(sheet.cell(row_index,1).value),
+        for row_index in range(7,sheet.nrows):
+
+            contaExiste = PlanoConta.query.filter(PlanoConta.conta.like(sheet.cell(row_index,1).value)).first()
+            if contaExiste:
+                print "oi"
+            if contaExiste == None:
+                
+                PlanoConta(conta=unicode(sheet.cell(row_index,1).value),
+                    descricao=unicode(sheet.cell(row_index,2).value),
                 )
                 session.commit()
                 contasInseridas +=1
