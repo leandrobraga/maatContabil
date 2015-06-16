@@ -313,13 +313,14 @@ class WindowPlanoConta(wx.MiniFrame):
         
         for row_index in range(7,sheet.nrows):
 
-            contaExiste = PlanoConta.query.filter(PlanoConta.conta.like(sheet.cell(row_index,1).value)).first()
-            if contaExiste:
-                print "oi"
+            # print sheet.cell(row_index,1).value
+
+            contaExiste = PlanoConta.query.filter(PlanoConta.conta.like(sheet.cell(row_index,2).value)).first()
+            
             if contaExiste == None:
                 
-                PlanoConta(conta=unicode(sheet.cell(row_index,1).value),
-                    descricao=unicode(sheet.cell(row_index,2).value),
+                PlanoConta(conta=unicode(sheet.cell(row_index,2).value),
+                    descricao=unicode(sheet.cell(row_index,3).value),
                 )
                 session.commit()
                 contasInseridas +=1
