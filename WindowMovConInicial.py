@@ -677,7 +677,7 @@ class WindowMovConInicial(wx.MiniFrame):
 
         year = sheet.cell(1, 1).value.split(" ")[2]
 
-        dialog = wx.ProgressDialog(u"Importando Movimentos Contábeis", u"Aguarde enquanto a operação é concluída", sheet.nrows -6, parent=self, style=wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
+        dialog = wx.ProgressDialog(u"Importando Movimentos Contábeis", u"Aguarde enquanto a operação é concluída", sheet.nrows -10, parent=self, style= wx.PD_AUTO_HIDE | wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
 
         for row_index in range(4,sheet.nrows-6):
             contaExiste = MovConIni.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,0).value).first()

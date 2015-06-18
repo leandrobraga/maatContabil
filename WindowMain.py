@@ -11,6 +11,7 @@ ID_CONVENIO = 1003
 ID_PARTICIPANTES_CONVENIOS = 1004
 ID_EMPENHO_CONVENIO = 1005
 ID_LICITACAO = 1006
+ID_LICITACAO_EMPENHO = 1036
 ID_ITEM_LICITACAO = 1007
 ID_COTACAO = 1008
 ID_CERTIDAO = 1009
@@ -24,6 +25,7 @@ ID_RELATORIOS = 1016
 ID_GERAR_RELATORIOS = 1017
 ID_ITEMADESAOATA = 1018
 ID_ADESAOATALICITACAO = 1019
+ID_ADESAOATAEMPENHO = 1035
 ID_PLANO_DE_CONTAS = 1020
 ID_CONTAS = 1021
 ID_MOVCOMINICIAL = 1022
@@ -62,6 +64,7 @@ class WindowMain(wx.Frame):
 
         licitacoesMenu = wx.Menu()
         licitacoesMenuItem1 = licitacoesMenu.Append(ID_LICITACAO, u'Licitação', u'Informe de Licitações')
+        licitacoesMenuItem7 = licitacoesMenu.Append(ID_LICITACAO, u'Licitação Empenho', u'Informe de Licitações de empenho')
         licitacoesMenuItem2 = licitacoesMenu.Append(ID_ITEM_LICITACAO, u'Item de Licitação', u'Informe de Item de Licitação')
         licitacoesMenuItem3 = licitacoesMenu.Append(ID_PARTICIPANTE_LICITACAO, u'Participante de Licitação', u'Informe de Participante de Licitação')
         licitacoesMenuItem4 = licitacoesMenu.Append(ID_COTACAO, u'Cotação', u'Informe de Cotação')
@@ -71,6 +74,7 @@ class WindowMain(wx.Frame):
         atasMenu = wx.Menu()
         atasMenuItem1 = atasMenu.Append(ID_ITEMADESAOATA, u'Item Adesão Ata', 'Informe os itens de adesão a ata')
         atasMenuItem2 = atasMenu.Append(ID_ADESAOATALICITACAO, u'Adesão Ata de Licitação', u'Ifnorme adesão a ata de licitação')
+        atasMenuItem3 = atasMenu.Append(ID_ADESAOATAEMPENHO, u'Adesão Ata Empenho', u'Ifnorme adesão a ata empenho')
         
         contabilMenu = wx.Menu()
         planoDeContasSubMenu = contabilMenu.Append(ID_PLANO_DE_CONTAS, u'Plano de Contas', u'Informe os planos de contas')
@@ -121,6 +125,7 @@ class WindowMain(wx.Frame):
         self.Bind(wx.EVT_MENU, self.windowParticipanteConvenio, participantesConvenioSubMenu)
         self.Bind(wx.EVT_MENU, self.windowEmpenhoConvenio, empenhosConvenioSubmenu)
         self.Bind(wx.EVT_MENU, self.windowLicitacao, licitacoesMenuItem1)
+        self.Bind(wx.EVT_MENU, self.windowLicitacaoEmpenho, licitacoesMenuItem7)
         self.Bind(wx.EVT_MENU, self.windowItemLicitacao, licitacoesMenuItem2)
         self.Bind(wx.EVT_MENU, self.windowParticipanteLicitacao, licitacoesMenuItem3)
         self.Bind(wx.EVT_MENU, self.windowCotacao, licitacoesMenuItem4)
@@ -129,6 +134,7 @@ class WindowMain(wx.Frame):
         #self.Bind(wx.EVT_MENU, self.windowDotacao, licitacoesMenuItem7)
         self.Bind(wx.EVT_MENU, self.windowItemAta,atasMenuItem1)
         self.Bind(wx.EVT_MENU, self.windowLicitacaoAta,atasMenuItem2)
+        self.Bind(wx.EVT_MENU, self.windowEmpenhoAta,atasMenuItem3)
         self.Bind(wx.EVT_MENU, self.windowPlanoConta, planoDeContasSubMenu)
         self.Bind(wx.EVT_MENU, self.windowConta, contasSubMenu)
         self.Bind(wx.EVT_MENU, self.windowMovConInicial, movConInicialSubMenu)
@@ -200,6 +206,10 @@ class WindowMain(wx.Frame):
         import WindowLicitacao
         WindowLicitacao.WindowLicitacao(self)
 
+    def windowLicitacaoEmpenho(self, event):
+        import WindowLicitacaoEmpenho
+        WindowLicitacaoEmpenho.WindowLicitacaoEmpenho(self)
+
     def windowItemLicitacao(self, event):
         import WindowItemLicitacao
         WindowItemLicitacao.WindowItemLicitacao(self)
@@ -240,6 +250,10 @@ class WindowMain(wx.Frame):
         import WindowLicitacaoAta
         WindowLicitacaoAta.WindowLicitacaoAta(self)
 
+    def windowEmpenhoAta(self, event):
+        import WindowEmpenhoAta
+        WindowEmpenhoAta.WindowEmpenhoAta(self)        
+
     def windowPlanoConta(self, event):
         import WindowPlanoConta
         WindowPlanoConta.WindowPlanoConta(self)
@@ -260,8 +274,6 @@ class WindowMain(wx.Frame):
         import WindowMovConFinal
         WindowMovConFinal.WindowMovConFinal(self)
     
-
-
     def windowUser(self, event):
         import WindowUser
         WindowUser.WindowUser(self)

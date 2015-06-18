@@ -309,11 +309,9 @@ class WindowPlanoConta(wx.MiniFrame):
         
         contasInseridas = 0
 
-        dialog = wx.ProgressDialog(u"Importando Planos de Conta", u"Aguarde enquanto a operação é concluída", sheet.nrows -6 , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
+        dialog = wx.ProgressDialog(u"Importando Planos de Conta", u"Aguarde enquanto a operação é concluída", sheet.nrows -7 , parent=self, style = wx.PD_AUTO_HIDE | wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
         
         for row_index in range(7,sheet.nrows):
-
-            # print sheet.cell(row_index,1).value
 
             contaExiste = PlanoConta.query.filter(PlanoConta.conta.like(sheet.cell(row_index,2).value)).first()
             
@@ -325,7 +323,9 @@ class WindowPlanoConta(wx.MiniFrame):
                 session.commit()
                 contasInseridas +=1
                 dialog.Update(contasInseridas)
+                
         dialog.Destroy()
+
         return contasInseridas    
 
     def onOpenFile(self):

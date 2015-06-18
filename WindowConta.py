@@ -126,7 +126,6 @@ class WindowConta(wx.MiniFrame):
             index = self.contaListCtrl.InsertStringItem(sys.maxint, unicode(conta.codigoConta))
             self.contaListCtrl.SetStringItem(index, 1, unicode(conta.nomeConta))
             self.contaListCtrl.SetStringItem(index, 2, unicode(conta.id))
-               
 
     def escapaChar(self, event):
 
@@ -345,8 +344,6 @@ class WindowConta(wx.MiniFrame):
         self.windowEditaConta.Centre()
         self.windowEditaConta.Show()
 
-        
-
     def quitContaEdita(self, event):
 
         self.toolBarControler(True, True, True, True)
@@ -494,7 +491,6 @@ class WindowConta(wx.MiniFrame):
             self.insereInCtrList(None)
             self.conta = None
             self.windowEditaConta.Close()
-
     
     def salvarConta(self, event):
 
@@ -566,7 +562,6 @@ class WindowConta(wx.MiniFrame):
             self.message = wx.MessageDialog(None, u'Conta excluída com sucesso!', 'Info', wx.OK)
             self.message.ShowModal()
 
-
     def geraArquivoWindow(self, event):
 
         self.toolBarControler(False, False, False, False)
@@ -613,7 +608,6 @@ class WindowConta(wx.MiniFrame):
 
         self.windowGeraArquivo.Centre()
         self.windowGeraArquivo.Show()
-
 
     def selecionaItensLicitacaoGeraArquivos(self, event):
 
@@ -703,7 +697,6 @@ class WindowConta(wx.MiniFrame):
 
         self.itensGeraArquivoListCtrl = []
 
-
     def removeGeraArquivo(self, event):
 
         if not self.itensParaArquivosListCtrl:
@@ -721,7 +714,6 @@ class WindowConta(wx.MiniFrame):
                 self.contasParaArquivoListCtrl.DeleteItem(item)
 
         self.itensParaArquivosListCtrl = []
-
 
     def selecionaItensLicitacaoParaArquivo(self, event):
 
@@ -770,7 +762,6 @@ class WindowConta(wx.MiniFrame):
                         self.message = wx.MessageDialog(None, u'Houve um erro na geração do arquivo!\nVerifique se você tem permissão de escrita ou se o arquivo já se encontra aberto!', 'Error', wx.OK)
                         self.message.ShowModal()
 
-
     def geraArquivo(self):
 
         f = codecs.open(self.path, "w", "utf-8")
@@ -807,7 +798,6 @@ class WindowConta(wx.MiniFrame):
 
         return 1
 
-
     def quitGeraArquivo(self, event):
 
         self.toolBarControler(True, True, True, True)
@@ -831,8 +821,6 @@ class WindowConta(wx.MiniFrame):
         else:
             return u'Mista'
 
-
-
     def transformaTipoConta(self, tipoConta):
        
         if unicode(tipoConta) == u'Conta Bancária':
@@ -843,7 +831,6 @@ class WindowConta(wx.MiniFrame):
             return 3
         else:
             return 9 
-    
 
     def tipoContaParaSigla(self, tipoConta):
        
@@ -925,7 +912,7 @@ class WindowConta(wx.MiniFrame):
         
         contasInseridas = 0
         
-        dialog = wx.ProgressDialog(u"Importando Contas", u"Aguarde enquanto a operação é concluída", sheet.nrows , parent=self, style = wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
+        dialog = wx.ProgressDialog(u"Importando Contas", u"Aguarde enquanto a operação é concluída", sheet.nrows-7 , parent=self, style = wx.PD_AUTO_HIDE | wx.PD_CAN_ABORT | wx.PD_APP_MODAL )
         
         for row_index in range(7,sheet.nrows):
             contaExiste = Conta.query.filter_by(competencia=unicode(self.getMounthOnSheet(sheet))).filter_by(codigoConta=sheet.cell(row_index,2).value).first()
@@ -958,5 +945,3 @@ class WindowConta(wx.MiniFrame):
         dialog.Destroy()
 
         return contasInseridas    
-
-

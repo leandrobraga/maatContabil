@@ -262,6 +262,23 @@ class LicitacaoAta(Entity):
     cnpjOrgao = Field(Unicode(14), required=True)
     competencia = Field(Unicode(30), required=True)
 
+class EmpenhoAta(Entity):
+
+    processoCompra = Field(Unicode(18), required=True)
+    numeroAta = Field(Unicode(18), required=True)
+    numeroNotaEmpenho = Field(Unicode(10), required=True)
+    anoEmpenho = Field(Unicode(4), required=True)
+    codigoUnidade = Field(Unicode(6), required=True)
+    competencia = Field(Unicode(30), required=True)
+
+class LicitacaoEmpenho(Entity):
+
+    processoLicitacao = Field(Unicode(18), required=True)
+    numeroNotaEmpenho = Field(Unicode(10), required=True)
+    anoEmpenho = Field(Unicode(4), required=True)
+    codigoUnidade = Field(Unicode(6), required=True)
+    competencia = Field(Unicode(30), required=True)
+
 class PlanoConta(Entity):
     
     conta = Field(Unicode(34), required=True)
