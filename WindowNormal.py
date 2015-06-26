@@ -62,7 +62,7 @@ class WindowNormal(wx.Frame):
 
         licitacoesMenu = wx.Menu()
         licitacoesMenuItem1 = licitacoesMenu.Append(ID_LICITACAO, u'Licitação', u'Informe de Licitações')
-        licitacoesMenuItem7 = licitacoesMenu.Append(ID_LICITACAO, u'Licitação Empenho', u'Informe de Licitações de empenho')
+        licitacoesMenuItem7 = licitacoesMenu.Append(ID_LICITACAO_EMPENHO, u'Licitação Empenho', u'Informe de Licitações de empenho')
         licitacoesMenuItem2 = licitacoesMenu.Append(ID_ITEM_LICITACAO, u'Item de Licitação', u'Informe de Item de Licitação')
         licitacoesMenuItem3 = licitacoesMenu.Append(ID_PARTICIPANTE_LICITACAO, u'Participante de Licitação', u'Informe de Participante de Licitação')
         licitacoesMenuItem4 = licitacoesMenu.Append(ID_COTACAO, u'Cotação', u'Informe de Cotação')

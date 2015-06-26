@@ -199,7 +199,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataAssinaturaContrato.SetSize((80, -1))
         self.tcDataAssinaturaContrato.SetPosition((290, 250))
 
-        self.stDataVencimentoContrato = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(410, 230), style=wx.ALIGN_LEFT)
+        self.stDataVencimentoContrato = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(410, 230), style=wx.ALIGN_LEFT)
         self.tcDataVencimentoContrato = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoContrato.SetSize((80, -1))
         self.tcDataVencimentoContrato.SetPosition((410, 250))
@@ -229,13 +229,13 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataCertidaoINSS.SetSize((80, -1))
         self.tcDataCertidaoINSS.SetPosition((150, 370))
 
-        self.stDataValidadeINSS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 350), style= wx.ALIGN_LEFT)
+        self.stDataValidadeINSS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 350), style= wx.ALIGN_LEFT)
         self.tcDataValidadeINSS = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataValidadeINSS.SetSize((80, -1))
         self.tcDataValidadeINSS.SetPosition((280, 370))
 
-        self.stNumeroCertidaoFGTS = wx.StaticText(self.panelNovoContrato, -1, u'FGTS', pos=(10, 400), style= wx.ALIGN_LEFT)
-        self.tcNumeroCertidaoFGTS = wx.TextCtrl(self.panelNovoContrato, -1, pos=(10, 420), size=(100, -1), style= wx.ALIGN_LEFT)
+        self.stNumeroCertidaoFGTS = wx.StaticText(self.panelNovoContrato, -1, u'FGTS', pos=(420, 350), style= wx.ALIGN_LEFT)
+        self.tcNumeroCertidaoFGTS = wx.TextCtrl(self.panelNovoContrato, -1, pos=(420, 370), size=(100, -1), style= wx.ALIGN_LEFT)
         self.tcNumeroCertidaoFGTS.SetMaxLength(60)
         
         self.stDataCertidaoFGTS = wx.StaticText(self.panelNovoContrato, -1, u'Data Emissão', pos=(150, 400), style= wx.ALIGN_LEFT)
@@ -243,7 +243,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataCertidaoFGTS.SetSize((80, -1))
         self.tcDataCertidaoFGTS.SetPosition((150, 420))
 
-        self.stDataValidadeFGTS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 400), style= wx.ALIGN_LEFT)
+        self.stDataValidadeFGTS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 400), style= wx.ALIGN_LEFT)
         self.tcDataValidadeFGTS = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataValidadeFGTS.SetSize((80, -1))
         self.tcDataValidadeFGTS.SetPosition((280, 420))
@@ -257,7 +257,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoFazendaEstadual.SetSize((80, -1))
         self.tcDataEmissaoFazendaEstadual.SetPosition((150, 470))
 
-        self.stDataVencimentoFazendaEstadual = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 450), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoFazendaEstadual = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 450), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoFazendaEstadual = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoFazendaEstadual.SetSize((80, -1))
         self.tcDataVencimentoFazendaEstadual.SetPosition((280, 470))
@@ -271,7 +271,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoFazendaMunicipal.SetSize((80, -1))
         self.tcDataEmissaoFazendaMunicipal.SetPosition((150, 520))
 
-        self.stDataVencimentoFazendaMunicipal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 500), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoFazendaMunicipal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 500), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoFazendaMunicipal = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoFazendaMunicipal.SetSize((80, -1))
         self.tcDataVencimentoFazendaMunicipal.SetPosition((280, 520))
@@ -285,7 +285,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoFazendaFederal.SetSize((80, -1))
         self.tcDataEmissaoFazendaFederal.SetPosition((150, 570))
 
-        self.stDataVencimentoFazendaFederal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 550), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoFazendaFederal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 550), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoFazendaFederal = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoFazendaFederal.SetSize((80, -1))
         self.tcDataVencimentoFazendaFederal.SetPosition((280, 570))
@@ -299,7 +299,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoCNDT.SetSize((80, -1))
         self.tcDataEmissaoCNDT.SetPosition((150, 620))
 
-        self.stDataVencimentoCNDT = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 600), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoCNDT = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 600), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoCNDT = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoCNDT.SetSize((80, -1))
         self.tcDataVencimentoCNDT.SetPosition((280, 620))
@@ -313,7 +313,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoOutras.SetSize((80, -1))
         self.tcDataEmissaoOutras.SetPosition((150, 670))
 
-        self.stDataVencimentoOutras = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 650), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoOutras = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 650), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoOutras = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoOutras.SetSize((80, -1))
         self.tcDataVencimentoOutras.SetPosition((280, 670))
@@ -516,7 +516,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataAssinaturaContrato.SetPosition((290, 250))
         self.tcDataAssinaturaContrato.SetValue(self.contrato.dataAssinaturaContrato)
 
-        self.stDataVencimentoContrato = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(410, 230), style=wx.ALIGN_LEFT)
+        self.stDataVencimentoContrato = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(410, 230), style=wx.ALIGN_LEFT)
         self.tcDataVencimentoContrato = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoContrato.SetSize((80, -1))
         self.tcDataVencimentoContrato.SetPosition((410, 250))
@@ -552,7 +552,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataCertidaoINSS.SetPosition((150, 370))
         self.tcDataCertidaoINSS.SetValue(self.contrato.dataCertidaoINSS)
 
-        self.stDataValidadeINSS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 350), style= wx.ALIGN_LEFT)
+        self.stDataValidadeINSS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 350), style= wx.ALIGN_LEFT)
         self.tcDataValidadeINSS = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataValidadeINSS.SetSize((80, -1))
         self.tcDataValidadeINSS.SetPosition((280, 370))
@@ -569,7 +569,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataCertidaoFGTS.SetPosition((150, 420))
         self.tcDataCertidaoFGTS.SetValue(self.contrato.dataCertidaoFGTS)
 
-        self.stDataValidadeFGTS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 400), style= wx.ALIGN_LEFT)
+        self.stDataValidadeFGTS = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 400), style= wx.ALIGN_LEFT)
         self.tcDataValidadeFGTS = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataValidadeFGTS.SetSize((80, -1))
         self.tcDataValidadeFGTS.SetPosition((280, 420))
@@ -586,7 +586,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoFazendaEstadual.SetPosition((150, 470))
         self.tcDataEmissaoFazendaEstadual.SetValue(self.contrato.dataCertidaoFazendaEstadual)
 
-        self.stDataVencimentoFazendaEstadual = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 450), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoFazendaEstadual = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 450), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoFazendaEstadual = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoFazendaEstadual.SetSize((80, -1))
         self.tcDataVencimentoFazendaEstadual.SetPosition((280, 470))
@@ -603,7 +603,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoFazendaMunicipal.SetPosition((150, 520))
         self.tcDataEmissaoFazendaMunicipal.SetValue(self.contrato.dataCertidaoFazendaMunicipal)
 
-        self.stDataVencimentoFazendaMunicipal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 500), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoFazendaMunicipal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 500), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoFazendaMunicipal = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoFazendaMunicipal.SetSize((80, -1))
         self.tcDataVencimentoFazendaMunicipal.SetPosition((280, 520))
@@ -620,7 +620,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoFazendaFederal.SetPosition((150, 570))
         self.tcDataEmissaoFazendaFederal.SetValue(self.contrato.dataCertidaoFazendaFederal)
 
-        self.stDataVencimentoFazendaFederal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 550), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoFazendaFederal = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 550), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoFazendaFederal = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoFazendaFederal.SetSize((80, -1))
         self.tcDataVencimentoFazendaFederal.SetPosition((280, 570))
@@ -637,7 +637,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoCNDT.SetPosition((150, 620))
         self.tcDataEmissaoCNDT.SetValue(self.contrato.dataCertidaoCNDT)
 
-        self.stDataVencimentoCNDT = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 600), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoCNDT = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 600), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoCNDT = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoCNDT.SetSize((80, -1))
         self.tcDataVencimentoCNDT.SetPosition((280, 620))
@@ -654,7 +654,7 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataEmissaoOutras.SetPosition((150, 670))
         self.tcDataEmissaoOutras.SetValue(self.contrato.dataCertidaoOutras)
 
-        self.stDataVencimentoOutras = wx.StaticText(self.panelNovoContrato, -1, u'Data de Vencimento', pos=(280, 650), style= wx.ALIGN_LEFT)
+        self.stDataVencimentoOutras = wx.StaticText(self.panelNovoContrato, -1, u'Data de Venc.', pos=(280, 650), style= wx.ALIGN_LEFT)
         self.tcDataVencimentoOutras = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoOutras.SetSize((80, -1))
         self.tcDataVencimentoOutras.SetPosition((280, 670))
@@ -939,7 +939,7 @@ class WindowContrato(wx.MiniFrame):
             self.tcDataAssinaturaContrato.SetFocus()
             return 0
 
-        if not self.validateDate(self.tcDataVencimentoContrato.GetValue(), u"Data de Vencimento"):
+        if not self.validateDate(self.tcDataVencimentoContrato.GetValue(), u"Data de Venc."):
             self.tcDataVencimentoContrato.SelectAll()
             self.tcDataVencimentoContrato.SetFocus()
             return 0
@@ -962,7 +962,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataCertidaoINSS.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataValidadeINSS.GetValue(), u"Data de Vencimento (INSS)"):
+            if not self.validateDate(self.tcDataValidadeINSS.GetValue(), u"Data de Venc. (INSS)"):
                 self.tcDataValidadeINSS.SelectAll()
                 self.tcDataValidadeINSS.SetFocus()
                 return 0
@@ -973,7 +973,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataCertidaoFGTS.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataValidadeFGTS.GetValue(), u"Data de Vencimento (FGTS)"):
+            if not self.validateDate(self.tcDataValidadeFGTS.GetValue(), u"Data de Venc. (FGTS)"):
                 self.tcDataValidadeFGTS.SelectAll()
                 self.tcDataValidadeFGTS.SetFocus()
                 return 0
@@ -984,7 +984,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataEmissaoFazendaEstadual.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataVencimentoFazendaEstadual.GetValue(), u"Data de Vencimento (Fazenda Estadual)"):
+            if not self.validateDate(self.tcDataVencimentoFazendaEstadual.GetValue(), u"Data de Venc. (Fazenda Estadual)"):
                 self.tcDataVencimentoFazendaEstadual.SelectAll()
                 self.tcDataVencimentoFazendaEstadual.SetFocus()
                 return 0
@@ -995,7 +995,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataEmissaoFazendaEstadual.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataVencimentoFazendaFederal.GetValue(), u"Data de Vencimento (Fazenda Federal)"):
+            if not self.validateDate(self.tcDataVencimentoFazendaFederal.GetValue(), u"Data de Venc. (Fazenda Federal)"):
                 self.tcDataVencimentoFazendaFederal.SelectAll()
                 self.tcDataVencimentoFazendaFederal.SetFocus()
                 return 0
@@ -1007,7 +1007,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataEmissaoFazendaMunicipal.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataVencimentoFazendaMunicipal.GetValue(), u"Data de Vencimento (Fazenda Municipal)"):
+            if not self.validateDate(self.tcDataVencimentoFazendaMunicipal.GetValue(), u"Data de Venc. (Fazenda Municipal)"):
                 self.tcDataVencimentoFazendaMunicipal.SelectAll()
                 self.tcDataVencimentoFazendaMunicipal.SetFocus()
                 return 0
@@ -1019,7 +1019,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataEmissaoOutras.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataVencimentoCNDT.GetValue(), u"Data de Vencimento (CNDT)"):
+            if not self.validateDate(self.tcDataVencimentoCNDT.GetValue(), u"Data de Venc. (CNDT)"):
                 self.tcDataVencimentoOutras.SelectAll()
                 self.tcDataVencimentoOutras.SetFocus()
                 return 0
@@ -1031,7 +1031,7 @@ class WindowContrato(wx.MiniFrame):
                 self.tcDataEmissaoOutras.SetFocus()
                 return 0
 
-            if not self.validateDate(self.tcDataVencimentoOutras.GetValue(), u"Data de Vencimento (Outras)"):
+            if not self.validateDate(self.tcDataVencimentoOutras.GetValue(), u"Data de Venc. (Outras)"):
                 self.tcDataVencimentoOutras.SelectAll()
                 self.tcDataVencimentoOutras.SetFocus()
                 return 0
@@ -1247,7 +1247,7 @@ class WindowContrato(wx.MiniFrame):
 
     def transformaTipoAditivo(self, tipo):
         
-        if tipo:
+        if not tipo:
             return 0
 
         if tipo == u'Acréscimo de valor':

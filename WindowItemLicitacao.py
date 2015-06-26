@@ -217,7 +217,7 @@ class WindowItemLicitacao(wx.MiniFrame):
         self.cbNumeroProcesso.Clear()
 
         licitacoes = Licitacao.query.filter_by(competencia=self.cbCompetencia.GetValue()).all()
-
+        
         if not licitacoes:
             self.message = wx.MessageDialog(None, u'Não existe Licitações para a competência selecionada!', 'Info', wx.OK)
             self.message.ShowModal()

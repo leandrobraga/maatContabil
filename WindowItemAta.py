@@ -430,9 +430,9 @@ class WindowItemAta(wx.MiniFrame):
         self.itemAtaGeraArquivoListCtrl.InsertColumn(3, u'', width=0)
         self.itemAtaGeraArquivoListCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.selecionaItensGeraArquivos)
 
-        self.btnGeraArquivo = wx.Button(self.panelGeraArquivo, -1, u">>", pos=(320, 200))
+        self.btnGeraArquivo = wx.Button(self.panelGeraArquivo, -1, u">>", pos=(320, 200), size=(70,-1))
         self.btnGeraArquivo.Bind(wx.EVT_BUTTON, self.insereGeraArquivo)
-        self.btnRemoveGeraArquivo = wx.Button(self.panelGeraArquivo, -1, u"<<", pos=(320, 250))
+        self.btnRemoveGeraArquivo = wx.Button(self.panelGeraArquivo, -1, u"<<", pos=(320, 250), size=(70,-1))
         self.btnRemoveGeraArquivo.Bind(wx.EVT_BUTTON, self.removeGeraArquivo)
 
         wx.StaticText(self.panelGeraArquivo, -1, u'Gerar Arquivo Com:', pos=(400, 70))
@@ -611,7 +611,7 @@ class WindowItemAta(wx.MiniFrame):
 
         for x in range(self.itemAtaParaArquivoListCtrl.GetItemCount()):
 
-            #try:
+            try:
 
                 idItemAta = int(self.itemAtaParaArquivoListCtrl.GetItem(x, 3).GetText())
                 item = ItemAta.query.filter_by(id=idItemAta).first()
@@ -640,7 +640,7 @@ class WindowItemAta(wx.MiniFrame):
                 f.write(unicode(item.controleItem.ljust(10).replace("'", "").replace("\"", "")))                
                 f.write(u'\n')
 
-            #except:
+            except:
 
-                #return 0
+                return 0
         return 1
