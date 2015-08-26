@@ -164,6 +164,12 @@ class WindowLicitacaoAta(wx.MiniFrame):
         self.tcDataAdesao.SetSize((80, -1))
         self.tcDataAdesao.SetPosition((170, 210))
 
+        self.stDataCompetencia = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'Data Competência (AAAA/MM)', pos=(260, 190))
+        self.tcDataCompetencia = masked.TextCtrl(self.panelNovoLicitacaoAta, -1, mask="####/##")
+        self.tcDataCompetencia.SetSize((80, -1))
+        self.tcDataCompetencia.SetPosition((260, 210))
+
+
         self.tcTipoAdesao = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'Tipo de Adesão', pos=(10, 250))
         self.cbTipoAdesao = wx.ComboBox(self.panelNovoLicitacaoAta, -1, size=(200, -1), pos=(10, 270), choices=self.choicesTipoAdesoes, style= wx.CB_READONLY)
 
@@ -248,6 +254,12 @@ class WindowLicitacaoAta(wx.MiniFrame):
         self.tcDataAdesao.SetSize((80, -1))
         self.tcDataAdesao.SetPosition((170, 210))
         self.tcDataAdesao.SetValue(self.licitacao.dataAdesao)
+
+        self.stDataCompetencia = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'Data Competência (AAAA/MM)', pos=(260, 190))
+        self.tcDataCompetencia = masked.TextCtrl(self.panelNovoLicitacaoAta, -1, mask="####/##")
+        self.tcDataCompetencia.SetSize((80, -1))
+        self.tcDataCompetencia.SetPosition((260, 210))
+        self.tcDataCompetencia.SetValue(self.licitacao.dataCompetencia)
 
         self.tcTipoAdesao = wx.StaticText(self.panelNovoLicitacaoAta, -1, u'Tipo de Adesão', pos=(10, 250))
         self.cbTipoAdesao = wx.ComboBox(self.panelNovoLicitacaoAta, -1, size=(200, -1), pos=(10, 270), choices=self.choicesTipoAdesoes, style= wx.CB_READONLY)
@@ -419,6 +431,7 @@ class WindowLicitacaoAta(wx.MiniFrame):
                         dataAdesao=unicode(self.tcDataAdesao.GetValue()),
                         tipoAdesao=unicode(self.cbTipoAdesao.GetValue()),
                         cnpjOrgao=unicode(self.tcCnpjOrgao.GetValue()),
+                        dataCompetencia=unicode(self.tcDataCompetencia.GetValue()),
                         competencia=unicode(self.cbCompetencia.GetValue()), 
                         )
 
@@ -446,6 +459,7 @@ class WindowLicitacaoAta(wx.MiniFrame):
             self.licitacao.dataAdesao=unicode(self.tcDataAdesao.GetValue())
             self.licitacao.tipoAdesao=unicode(self.cbTipoAdesao.GetValue())
             self.licitacao.cnpjOrgao=unicode(self.tcCnpjOrgao.GetValue())
+            self.licitacao.dataCompetencia=unicode(self.tcDataCompetencia.GetValue())
             self.licitacao.competencia=unicode(self.cbCompetencia.GetValue()) 
 
             session.commit()
@@ -694,7 +708,8 @@ class WindowLicitacaoAta(wx.MiniFrame):
                 f.write(unicode(item.numeroDOE.ljust(6).replace("'", "").replace("\"", "")))
                 f.write(unicode(self.transformaData(item.dataAdesao)))
                 f.write(unicode(self.transfromTipoAdesao(item.tipoAdesao).zfill(2)))
-                f.write(unicode(self.retiraCaracteresCpfCnpj(item.cnpjOrgao).zfill(14)))                
+                f.write(unicode(self.retiraCaracteresCpfCnpj(item.cnpjOrgao).zfill(14)))
+                f.write(unicode(self.transformaAAAAMM(item.dataCompetencia).zfill(6)))                
                 f.write(u'\n')
 
             except:
@@ -733,3 +748,10 @@ class WindowLicitacaoAta(wx.MiniFrame):
             else:
                 cpf = cpf+x
         return cpf
+
+    def transformaAAAAMM(self, data):
+
+        if data == "    /  ":
+            return '000000'
+        else:
+            return data[0:4]+data[5:7]

@@ -166,6 +166,11 @@ class WindowLicitacao(wx.MiniFrame):
         self.tcDiarioOficial.SetMaxLength(6)
         self.tcDiarioOficial.Bind(wx.EVT_CHAR, self.escapaChar)
 
+        self.stDataCompetencia = wx.StaticText(self.panelNovoLicitacao, -1, u'Data Competência (AAAA/MM)', pos=(200, 250))
+        self.tcDataCompetencia = masked.TextCtrl(self.panelNovoLicitacao, -1, mask="####/##")
+        self.tcDataCompetencia.SetSize((80, -1))
+        self.tcDataCompetencia.SetPosition((200, 270))
+        
         self.btnSalvar = wx.Button(self.panelNovoLicitacao, -1, u"Salvar", pos=(150, 320))
         self.btnSalvar.Bind(wx.EVT_BUTTON, self.salvarLicitacao)
         self.btnCancelar = wx.Button(self.panelNovoLicitacao, -1, u"Cancelar", pos=(250, 320))
@@ -345,6 +350,7 @@ class WindowLicitacao(wx.MiniFrame):
                 valorDespesa=unicode(self.tcValorDespesa.GetValue()),
                 numeroEditalLicitacao=unicode(self.tcNumeroEdital.GetValue()),
                 tipoLicitacao=unicode(self.cbTipoLicitacao.GetValue()),
+                dataCompetencia=unicode(self.tcDataCompetencia.GetValue()),
                 competencia=unicode(self.cbCompetencia.GetValue())
 
             )
@@ -423,6 +429,12 @@ class WindowLicitacao(wx.MiniFrame):
         self.tcDiarioOficial.Bind(wx.EVT_CHAR, self.escapaChar)
         self.tcDiarioOficial.SetValue(self.licitacao.numeroDiarioOficial)
 
+        self.stDataCompetencia = wx.StaticText(self.panelEditaLicitacao, -1, u'Data Competência (AAAA/MM)', pos=(200, 250))
+        self.tcDataCompetencia = masked.TextCtrl(self.panelEditaLicitacao, -1, mask="####/##")
+        self.tcDataCompetencia.SetSize((80, -1))
+        self.tcDataCompetencia.SetPosition((200, 270))
+        self.tcDataCompetencia.SetValue(self.licitacao.dataCompetencia)
+
         self.btnSalvar = wx.Button(self.panelEditaLicitacao, -1, u"Alterar", pos=(150, 320))
         self.btnSalvar.Bind(wx.EVT_BUTTON, self.editarLicitacao)
         self.btnCancelar = wx.Button(self.panelEditaLicitacao, -1, u"Cancelar", pos=(250, 320))
@@ -457,6 +469,7 @@ class WindowLicitacao(wx.MiniFrame):
             self.licitacao.valorDespesa = unicode(self.tcValorDespesa.GetValue())
             self.licitacao.numeroEditalLicitacao = unicode(self.tcNumeroEdital.GetValue())
             self.licitacao.tipoLicitacao = unicode(self.cbTipoLicitacao.GetValue())
+            self.licitacao.dataCompetencia = unicode(self.tcDataCompetencia.GetValue())
             self.licitacao.competencia = unicode(self.cbCompetencia.GetValue())
 
             session.commit()
@@ -682,6 +695,12 @@ class WindowLicitacao(wx.MiniFrame):
                         self.message = wx.MessageDialog(None, u'Houve um erro na geração do arquivo!\nVerifique se você tem permissão de escrita ou se o arquivo já se encontra aberto!', 'Error', wx.OK)
                         self.message.ShowModal()
                         
+    def transformaAAAAMM(self, data):
+
+        if data == "    /  ":
+            return '000000'
+        else:
+            return data[0:4]+data[5:7]
 
     def geraArquivo(self):
 
@@ -709,6 +728,7 @@ class WindowLicitacao(wx.MiniFrame):
                 
                 f.write(unicode(licitacao.numeroEditalLicitacao.ljust(16).replace("'", "").replace("\"", "")))
                 f.write(unicode(self.transformaTipo(licitacao.tipoLicitacao)))
+                f.write(unicode(self.transformaAAAAMM(licitacao.dataCompetencia).zfill(6)))
                 f.write(u'\n')
 
             except:

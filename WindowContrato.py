@@ -181,6 +181,11 @@ class WindowContrato(wx.MiniFrame):
         self.tcObjetivoContratado = wx.TextCtrl(self.panelNovoContrato, -1, pos=(130, 200), size=(350, -1), style=wx.ALIGN_LEFT)
         self.tcObjetivoContratado.SetMaxLength(300)
 
+        self.stCnpjOriginal = wx.StaticText(self.panelNovoContrato, -1, u'CNPJ da UG do contrato orig.', pos=(500, 180), style=wx.ALIGN_LEFT)
+        self.tcCnpjOriginal = masked.TextCtrl(self.panelNovoContrato, -1, mask="##.###.###/####-##")
+        self.tcCnpjOriginal.SetSize((140, -1))
+        self.tcCnpjOriginal.SetPosition((500, 200))
+        
         self.stCodigoMoeda = wx.StaticText(self.panelNovoContrato, -1, u'Tipo de Moeda', pos=(10, 230), style=wx.ALIGN_LEFT)
         self.cbCodigoMoeda = wx.ComboBox(self.panelNovoContrato, -1, pos=(10, 250), size=(90, -1), choices=self.choicesCodigoMoeda, style=wx.CB_READONLY)
         self.cbCodigoMoeda.Disable()
@@ -203,6 +208,11 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataVencimentoContrato = masked.TextCtrl(self.panelNovoContrato, -1, mask="##/##/####")
         self.tcDataVencimentoContrato.SetSize((80, -1))
         self.tcDataVencimentoContrato.SetPosition((410, 250))
+
+        self.stDataCompetencia = wx.StaticText(self.panelNovoContrato, -1, u'Data Competência (AAAA/MM)', pos=(500, 230), style=wx.ALIGN_LEFT)
+        self.tcDataCompetencia = masked.TextCtrl(self.panelNovoContrato, -1, mask="####/##")
+        self.tcDataCompetencia.SetSize((80, -1))
+        self.tcDataCompetencia.SetPosition((500, 250))        
 
         self.stNumeroProcessoLicitatorio = wx.StaticText(self.panelNovoContrato, -1, u'Número do Processo Licitatório', pos=(10, 280), style=wx.ALIGN_LEFT)
         self.tcNumeroProcessoLicitatorio = wx.TextCtrl(self.panelNovoContrato, -1, pos=(10, 300), size=(200, -1), style=wx.ALIGN_LEFT)
@@ -234,8 +244,8 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataValidadeINSS.SetSize((80, -1))
         self.tcDataValidadeINSS.SetPosition((280, 370))
 
-        self.stNumeroCertidaoFGTS = wx.StaticText(self.panelNovoContrato, -1, u'FGTS', pos=(420, 350), style= wx.ALIGN_LEFT)
-        self.tcNumeroCertidaoFGTS = wx.TextCtrl(self.panelNovoContrato, -1, pos=(420, 370), size=(100, -1), style= wx.ALIGN_LEFT)
+        self.stNumeroCertidaoFGTS = wx.StaticText(self.panelNovoContrato, -1, u'FGTS', pos=(10, 400), style= wx.ALIGN_LEFT)
+        self.tcNumeroCertidaoFGTS = wx.TextCtrl(self.panelNovoContrato, -1, pos=(10, 420), size=(100, -1), style= wx.ALIGN_LEFT)
         self.tcNumeroCertidaoFGTS.SetMaxLength(60)
         
         self.stDataCertidaoFGTS = wx.StaticText(self.panelNovoContrato, -1, u'Data Emissão', pos=(150, 400), style= wx.ALIGN_LEFT)
@@ -390,6 +400,8 @@ class WindowContrato(wx.MiniFrame):
                 dataValidadeOutras=unicode(self.tcDataVencimentoOutras.GetValue()),
                 numeroContratoAnterior=unicode(self.tcNumeroContratoSuperior.GetValue()),
                 tipoDoAditivo=unicode(self.tcTipoAditivo.GetValue()),
+                cnpjOriginal=unicode(self.tcCnpjOriginal.GetValue()),
+                dataCompetencia=unicode(self.tcDataCompetencia.GetValue()),
                 competencia=unicode(self.cbCompetencia.GetValue()),
             )
             session.commit()
@@ -496,6 +508,12 @@ class WindowContrato(wx.MiniFrame):
         self.tcObjetivoContratado.SetMaxLength(300)
         self.tcObjetivoContratado.SetValue(self.contrato.objetivoContrato)
 
+        self.stCnpjOriginal = wx.StaticText(self.panelNovoContrato, -1, u'CNPJ da UG do contrato orig.', pos=(500, 180), style=wx.ALIGN_LEFT)
+        self.tcCnpjOriginal = masked.TextCtrl(self.panelNovoContrato, -1, mask="##.###.###/####-##")
+        self.tcCnpjOriginal.SetSize((140, -1))
+        self.tcCnpjOriginal.SetPosition((500, 200))
+        self.tcCnpjOriginal.SetValue(self.contrato.cnpjOriginal)
+
         self.stCodigoMoeda = wx.StaticText(self.panelNovoContrato, -1, u'Tipo de Moeda', pos=(10, 230), style=wx.ALIGN_LEFT)
         self.cbCodigoMoeda = wx.ComboBox(self.panelNovoContrato, -1, pos=(10, 250), size=(90, -1), choices=self.choicesCodigoMoeda, style=wx.CB_READONLY)
         self.cbCodigoMoeda.SetValue(self.contrato.codigoMoeda)
@@ -521,6 +539,12 @@ class WindowContrato(wx.MiniFrame):
         self.tcDataVencimentoContrato.SetSize((80, -1))
         self.tcDataVencimentoContrato.SetPosition((410, 250))
         self.tcDataVencimentoContrato.SetValue(self.contrato.dataVencimentoContrato)
+
+        self.stDataCompetencia = wx.StaticText(self.panelNovoContrato, -1, u'Competência (AAAAMM)', pos=(500, 230), style=wx.ALIGN_LEFT)
+        self.tcDataCompetencia = masked.TextCtrl(self.panelNovoContrato, -1, mask="####/##")
+        self.tcDataCompetencia.SetSize((80, -1))
+        self.tcDataCompetencia.SetPosition((500, 250))
+        self.tcDataCompetencia.SetValue(self.contrato.dataCompetencia) 
 
         self.stNumeroProcessoLicitatorio = wx.StaticText(self.panelNovoContrato, -1, u'Número do Processo Licitatório', pos=(10, 280), style=wx.ALIGN_LEFT)
         self.tcNumeroProcessoLicitatorio = wx.TextCtrl(self.panelNovoContrato, -1, pos=(10, 300), size=(200, -1), style=wx.ALIGN_LEFT)
@@ -730,6 +754,7 @@ class WindowContrato(wx.MiniFrame):
             self.contrato.tipoContrato = unicode(self.cbTipoContrato.GetValue())
             self.contrato.numeroContratoAnterior = unicode(self.tcNumeroContratoSuperior.GetValue())
             self.contrato.tipoDoAditivo = unicode(self.tcTipoAditivo.GetValue())
+            self.contrato.cnpjOriginal = unicode(self.tcCnpjOriginal.GetValue())
             self.contrato.competencia = unicode(self.cbCompetencia.GetValue())
 
             session.commit()
@@ -862,6 +887,15 @@ class WindowContrato(wx.MiniFrame):
                 self.tcCicContratado.SetFocus()
                 self.message.ShowModal()
                 return 0
+
+        if not self.tcCnpjOriginal.GetValue() == "  .   .   /    -  ":
+
+            if not burocracia.CNPJ(self.tcCnpjOriginal.GetValue()).isValid():
+                    self.message = wx.MessageDialog(None, u'CNPJ da UG do contrato original inválido!', 'Info', wx.OK)
+                    self.tcCnpjOriginal.SelectAll()
+                    self.tcCnpjOriginal.SetFocus()
+                    self.message.ShowModal()
+                    return 0
 
         if self.cbTipoJuridicoContratado.GetSelection() == 1:
             if self.tcCicContratado.GetValue() == "  .   .   /    -  ":
@@ -1058,6 +1092,13 @@ class WindowContrato(wx.MiniFrame):
         else:
             return data[6:]+data[3:5]+data[0:2]
 
+    def transformaAAAAMM(self, data):
+
+        if data == "    /  ":
+            return '000000'
+        else:
+            return data[0:4]+data[5:7]
+
     def retiraCaracteresCpfCnpj(self, cic):
 
         cpf = ""
@@ -1238,6 +1279,10 @@ class WindowContrato(wx.MiniFrame):
 
                 f.write(unicode(self.transformaTipoAditivo(contrato.tipoDoAditivo)))
 
+                f.write(unicode(self.retiraCaracteresCpfCnpj(contrato.cnpjOriginal).zfill(14)))
+
+                f.write(unicode(self.transformaAAAAMM(contrato.dataCompetencia).zfill(6)))
+
                 f.write(u"\n")
             except:
                 return 0
@@ -1260,6 +1305,7 @@ class WindowContrato(wx.MiniFrame):
             return 3
 
     def transformaTipoContrato(self, tipo):
+        
         return self.tipoContrato[tipo]
 
     def transformaTipoJuridico(self, tipo):

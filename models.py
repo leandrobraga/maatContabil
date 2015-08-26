@@ -46,6 +46,8 @@ class Contrato(Entity):
     competencia = Field(Unicode(50))
     numeroContratoAnterior = Field(Unicode(16))
     tipoDoAditivo = Field(Unicode(50))
+    cnpjOriginal = Field(Unicode(14))
+    dataCompetencia = Field(Unicode(6))
 
     def __repr__(self):
         return self.numeroContrato
@@ -116,6 +118,7 @@ class Licitacao(Entity):
     valorDespesa = Field(Unicode(16))
     numeroEditalLicitacao = Field(Unicode(16))
     tipoLicitacao = Field(Unicode(1))
+    dataCompetencia = Field(Unicode(6))
     competencia = Field(Unicode(50))
 
     def __repr__(self):
@@ -260,6 +263,7 @@ class LicitacaoAta(Entity):
     dataAdesao = Field(Unicode(8), required=True)
     tipoAdesao = Field(Unicode(2), required=True)
     cnpjOrgao = Field(Unicode(14), required=True)
+    dataCompetencia = Field(Unicode(6))
     competencia = Field(Unicode(30), required=True)
 
 class EmpenhoAta(Entity):
