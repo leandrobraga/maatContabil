@@ -32,6 +32,10 @@ ID_MOVCOMINICIAL = 1022
 ID_MOVCOMMENSAL = 1023
 ID_MOVCOMFINAL = 1024
 
+ID_TRANSFVOL = 1040
+ID_CONVENENTETV = 1041
+ID_CERTIDAOTV = 1042
+ID_EMPENHOTV = 1043
 
 class WindowMain(wx.Frame):
 
@@ -55,12 +59,18 @@ class WindowMain(wx.Frame):
         empenhosContratosSubMenu = contratosMenu.Append(ID_EMPENHO_CONTRATO, u'Informações de Empenho', u'Informe os empenhos dos contratos')
         atoJuridicoMenu.AppendMenu(-1, u'Contratos', contratosMenu)
 
-        conveniosMenu = wx.Menu()
-        convenioSubMenu = conveniosMenu.Append(ID_CONVENIO, u'Convênios', u'Informe de Convênios')
-        participantesConvenioSubMenu = conveniosMenu.Append(ID_PARTICIPANTES_CONVENIOS, u'Participante de Convênios', u'Informe de Participantes de Convênios')
-        empenhosConvenioSubmenu = conveniosMenu.Append(ID_EMPENHO_CONVENIO, u'Informações de Empenho', u'Informe os empenhos dos convênios')
+        #conveniosMenu = wx.Menu()
+        #convenioSubMenu = conveniosMenu.Append(ID_CONVENIO, u'Convênios', u'Informe de Convênios')
+        #participantesConvenioSubMenu = conveniosMenu.Append(ID_PARTICIPANTES_CONVENIOS, u'Participante de Convênios', u'Informe de Participantes de Convênios')
+        #empenhosConvenioSubmenu = conveniosMenu.Append(ID_EMPENHO_CONVENIO, u'Informações de Empenho', u'Informe os empenhos dos convênios')
 
-        atoJuridicoMenu.AppendMenu(-1, u'Convênios', conveniosMenu)
+        transferenciasMenu = wx.Menu()
+        transferenciasSubMenu = transferenciasMenu.Append(ID_TRANSFVOL, u'Transferência Voluntária', u'Informe de transferência voluntária')
+        convenenteSubMenu = transferenciasMenu.Append(ID_CONVENENTETV, u'Convenente', u'Informe de Convenente')
+        certidaoSubMenu = transferenciasMenu.Append(ID_CERTIDAOTV, u'Certidão', u'Informe de Certidao')
+        empenhotvSubMenu = transferenciasMenu.Append(ID_EMPENHOTV, u'Empenho', u'Informe de Empenho')
+
+        atoJuridicoMenu.AppendMenu(-1, u'Transferência Voluntária', transferenciasMenu)
 
         licitacoesMenu = wx.Menu()
         licitacoesMenuItem1 = licitacoesMenu.Append(ID_LICITACAO, u'Licitação', u'Informe de Licitações')
@@ -121,9 +131,10 @@ class WindowMain(wx.Frame):
 
         self.Bind(wx.EVT_MENU, self.windowContrato, contratosSubMenu)
         self.Bind(wx.EVT_MENU, self.windowEmpenhoContrato, empenhosContratosSubMenu)
-        self.Bind(wx.EVT_MENU, self.windowConvenio, convenioSubMenu)
-        self.Bind(wx.EVT_MENU, self.windowParticipanteConvenio, participantesConvenioSubMenu)
-        self.Bind(wx.EVT_MENU, self.windowEmpenhoConvenio, empenhosConvenioSubmenu)
+        self.Bind(wx.EVT_MENU, self.windowTransferencia, transferenciasSubMenu)
+        self.Bind(wx.EVT_MENU, self.windowConvenente, convenenteSubMenu)
+        self.Bind(wx.EVT_MENU, self.windowCertidaotf, certidaoSubMenu)
+        self.Bind(wx.EVT_MENU, self.windowEmpenhotf, empenhotvSubMenu)
         self.Bind(wx.EVT_MENU, self.windowLicitacao, licitacoesMenuItem1)
         self.Bind(wx.EVT_MENU, self.windowLicitacaoEmpenho, licitacoesMenuItem7)
         self.Bind(wx.EVT_MENU, self.windowItemLicitacao, licitacoesMenuItem2)
@@ -194,9 +205,21 @@ class WindowMain(wx.Frame):
         import WindowContrato
         WindowContrato.WindowContrato(self)
 
-    def windowConvenio(self, event):
-        import WindowConvenio
-        WindowConvenio.WindowConvenio(self)
+    def windowTransferencia(self, event):
+        import WindowTransferencia
+        WindowTransferencia.WindowTransferencia(self)
+
+    def windowConvenente(self, event):
+        import WindowConvenente
+        WindowConvenente.WindowConvenente(self)
+
+    def windowCertidaotf(self, event):
+        import WindowCertidaotf
+        WindowCertidaotf.WindowCertidaotf(self)
+
+    def windowEmpenhotf(self, event):
+        import WindowEmpenhotf
+        WindowEmpenhotf.WindowEmpenhotf(self)
 
     def windowParticipanteConvenio(self, event):
         import WindowParticipanteConvenio

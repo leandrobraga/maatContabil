@@ -334,3 +334,74 @@ class MovConFinal(Entity):
     credito = Field(Unicode(16), required=True)
     competencia = Field(Unicode(40), required= True)
 
+class Transferencia(Entity):
+
+    cnpjConvenente = Field(Unicode(14))
+    numTransf = Field(Unicode(20))
+    tipoTransf = Field(Unicode(3))
+    numTransfSuperior = Field(Unicode(20))
+    anoTransf = Field(Unicode(4))
+    dataCelebracao = Field(Unicode(8))
+    dataInicio = Field(Unicode(8))
+    dataFim = Field(Unicode(8))
+    dataPublicacao = Field(Unicode(8))
+    atividadePrincipal = Field(Unicode(3))
+    objeto = Field(Unicode(300))
+    banco = Field(Unicode(3))
+    agenciaBancaria = Field(Unicode(3))
+    contaBancaria = Field(Unicode(14))
+    valorRepasse = Field(Unicode(18))
+    tipoContraPartida = Field(Unicode(1))
+    contraPartida = Field(Unicode(300))
+    contraPartidaFin = Field(Unicode(18))
+    contraPartidaEco = Field(Unicode(18))
+    nomeFiscalizador = Field(Unicode(50))
+    emailFiscalizador = Field(Unicode(60))
+    cpfFiscalizador = Field(Unicode(11))
+    cargoFiscalizador = Field(Unicode(50))
+    nomeExecucao = Field(Unicode(50))
+    emailExecucao = Field(Unicode(60))
+    cpfExecucao = Field(Unicode(11))
+    cargoExecucao = Field(Unicode(50))
+    nomeAssinaturaRepassador = Field(Unicode(50))
+    cpfAssinaturaRepassador = Field(Unicode(11))
+    nomeAssinaturaConvenente = Field(Unicode(50))
+    cpfAssinaturaConvenente = Field(Unicode(11))
+    dataCompetencia = Field(Unicode(10))
+    competencia = Field(Unicode(40))
+
+class Convenente(Entity):
+
+   cnpjConvenente = Field(Unicode(14))
+   razaoConvenente = Field(Unicode(50))
+   nomeFantasia = Field(Unicode(50))
+   dataInicio = Field(Unicode(8))
+   cnae = Field(Unicode(7))
+   esfera = Field(Unicode(1))
+   competencia = Field(Unicode(40))
+
+class CertidaoTV(Entity):
+
+    cnpjConvenente = Field(Unicode(14))
+    tipoTransf = Field(Unicode(3))
+    numeroInstrumento = Field(Unicode(20))
+    ano = Field(Unicode(4))
+    codigo = Field(Unicode(3))
+    numeroCertidao = Field(Unicode(30))
+    dataCertidao = Field(Unicode(8))
+    dataValidade = Field(Unicode(8))
+    competencia = Field(Unicode(40))
+
+class EmpenhoTV(Entity):
+
+   numTransf = Field(Unicode(20))
+   numeroEmpenho = Field(Unicode(10))
+   ano = Field(Unicode(4))
+   codigo = Field(Unicode(6))
+   tipoPart = Field(Unicode(1))
+   tipoInstrumento = Field(Unicode(3))
+   anoTansf = Field(Unicode(14))
+   cnpj = Field(Unicode(14))
+   competencia = Field(Unicode(40))
+
+
