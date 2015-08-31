@@ -755,6 +755,7 @@ class WindowContrato(wx.MiniFrame):
             self.contrato.numeroContratoAnterior = unicode(self.tcNumeroContratoSuperior.GetValue())
             self.contrato.tipoDoAditivo = unicode(self.tcTipoAditivo.GetValue())
             self.contrato.cnpjOriginal = unicode(self.tcCnpjOriginal.GetValue())
+            self.contrato.dataCompetencia = unicode(self.tcDataCompetencia.GetValue())
             self.contrato.competencia = unicode(self.cbCompetencia.GetValue())
 
             session.commit()
